@@ -16,6 +16,9 @@ build/
 .env.*
 !.env.example
 
+# Konfigurasi API lokal; jangan unggah ke repository
+config.js
+
 # Log dan file sementara
 *.log
 coverage/

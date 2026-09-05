@@ -2,8 +2,13 @@
    KONFIGURASI API
 ========================================= */
 
-const API_URL =
-  'https://script.google.com/macros/s/AKfycbylHbL7Dol1u2XUgZXoXEHVe3jFQJUaPERX2qI57uxmNn3K2XTCpSlP0N0cPfq1Zr7-/exec';
+const API_URL = window.APP_CONFIG?.API_URL;
+
+if (!API_URL) {
+  throw new Error(
+    'API URL belum dikonfigurasi. Buat file config.js berdasarkan config.example.js.'
+  );
+}
 
 
 /* =========================================
