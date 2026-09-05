@@ -533,21 +533,6 @@ async function loadRiwayat() {
 ========================================= */
 
 function formatRupiah(value) {
-  const text = String(value || '').trim();
-
-  // Jika ada error dari Google Sheet
-  if (text.includes('#REF!')) {
-    return `
-      <span style="
-        color: #dc2626;
-        font-weight: 700;
-      ">
-        ⚠️ #REF!
-      </span>
-    `;
-  }
-
-  return formatRupiah(value);
 
   const angka =
     Number(
@@ -567,31 +552,40 @@ function formatRupiah(value) {
 
 }
 
+
 /* =========================================
-   FORMAT NOMINAL ERROR / NORMAL
+   FORMAT NOMINAL
 ========================================= */
 
 function formatNominal(value) {
 
   const text =
-    String(value || '')
+    String(value ?? '')
       .trim();
 
 
-  if (
-    text.includes('#REF!')
-  ) {
+  /*
+    Tampilkan error Google Sheet apa adanya
+  */
 
+  if (
+    text.includes('#REF!') ||
+    text.includes('#VALUE!') ||
+    text.includes('#ERROR!')
+  ) {
     return `
       <span class="nominal-error">
-        ⚠️ #REF!
+        ⚠️ ${escapeHTML(text)}
       </span>
     `;
-
   }
 
 
-  return formatRupiah(value);
+  /*
+    Nominal normal → format Rupiah
+  */
+
+  return formatRupiah(text);
 
 }
 
