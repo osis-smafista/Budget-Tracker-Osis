@@ -548,7 +548,7 @@ function formatRupiah(value) {
   }
 
   return formatRupiah(value);
-  
+
   const angka =
     Number(
       String(value)
@@ -567,6 +567,33 @@ function formatRupiah(value) {
 
 }
 
+/* =========================================
+   FORMAT NOMINAL ERROR / NORMAL
+========================================= */
+
+function formatNominal(value) {
+
+  const text =
+    String(value || '')
+      .trim();
+
+
+  if (
+    text.includes('#REF!')
+  ) {
+
+    return `
+      <span class="nominal-error">
+        ⚠️ #REF!
+      </span>
+    `;
+
+  }
+
+
+  return formatRupiah(value);
+
+}
 
 /* =========================================
    ESCAPE HTML
