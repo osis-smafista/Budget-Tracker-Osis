@@ -2,13 +2,9 @@
    KONFIGURASI API
 ========================================= */
 
-const API_URL = window.APP_CONFIG?.API_URL;
+const API_URL = '/api';
 
-if (!API_URL) {
-  throw new Error(
-    'API URL belum dikonfigurasi. Buat file config.js berdasarkan config.example.js.'
-  );
-}
+
 
 
 async function bacaResponseJSON(response) {
@@ -283,6 +279,11 @@ form.addEventListener(
           {
 
             method: 'POST',
+
+            headers: {
+              'Content-Type':
+                'text/plain;charset=utf-8'
+            },
 
             body:
               JSON.stringify(data)
