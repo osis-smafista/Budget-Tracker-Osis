@@ -29,7 +29,10 @@ jobs:
         env:
           API_URL: ${{ secrets.API_URL }}
         run: |
-          test -n "$API_URL"
+          if [ -z "$API_URL" ]; then
+            echo "::error::Secret API_URL belum dibuat. Buka Settings > Secrets and variables > Actions, lalu buat secret API_URL."
+            exit 1
+          fi
           printf "window.APP_CONFIG = {\\n  API_URL: '%s'\\n};\\n" "$API_URL" > config.js
 
       - name: Setup Pages
