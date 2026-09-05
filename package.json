@@ -1,0 +1,7 @@
+{
+  "name": "budget-tracker-osis",
+  "private": true,
+  "scripts": {
+    "build": "node build.mjs"
+  }
+}

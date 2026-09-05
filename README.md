@@ -526,6 +526,45 @@ main
 
 GitHub Actions akan menjalankan workflow deployment secara otomatis.
 
+## Deployment ke Cloudflare Pages
+
+Cloudflare Pages tidak menjalankan workflow GitHub Actions. Gunakan build script bawaan project agar `config.js` dibuat saat proses build.
+
+### Pengaturan Build
+
+Pada Cloudflare Pages, pilih **Connect to Git** lalu atur:
+
+```text
+Framework preset: None
+Build command: npm run build
+Build output directory: dist
+```
+
+### Menambahkan API URL
+
+Di project Cloudflare Pages, buka **Settings** > **Environment variables**. Tambahkan variable untuk environment **Production** dan **Preview**:
+
+```text
+Name: API_URL
+Value: URL deployment Google Apps Script
+```
+
+Setelah disimpan, lakukan redeploy. File `build.mjs` akan menyalin website ke folder `dist` dan membuat `dist/config.js` dari variable `API_URL`, sehingga koneksi ke Google Apps Script tetap berjalan.
+
+Alur deployment Cloudflare:
+
+```text
+GitHub Repository
+        ↓
+Cloudflare Pages Build
+        ↓
+npm run build
+        ↓
+Generate dist/config.js
+        ↓
+Cloudflare Pages
+```
+
 ---
 
 # 🧪 Testing Checklist
