@@ -478,7 +478,7 @@ async function loadRiwayat() {
           </td>
 
           <td>
-            ${formatRupiah(item.nominal)}
+            ${formatNominal(item.nominal)}
           </td>
 
           <td>
@@ -533,7 +533,22 @@ async function loadRiwayat() {
 ========================================= */
 
 function formatRupiah(value) {
+  const text = String(value || '').trim();
 
+  // Jika ada error dari Google Sheet
+  if (text.includes('#REF!')) {
+    return `
+      <span style="
+        color: #dc2626;
+        font-weight: 700;
+      ">
+        ⚠️ #REF!
+      </span>
+    `;
+  }
+
+  return formatRupiah(value);
+  
   const angka =
     Number(
       String(value)
