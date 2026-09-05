@@ -1,6 +1,20 @@
 /* =========================
-   RESET
+  DESIGN TOKENS & RESET
 ========================= */
+
+:root {
+  --ink: #172033;
+  --muted: #667085;
+  --line: #e4e7ec;
+  --surface: #ffffff;
+  --canvas: #f6f8fb;
+  --navy: #102a43;
+  --blue: #1769aa;
+  --blue-dark: #0f4c81;
+  --green: #11845b;
+  --red: #c23b4a;
+  --shadow: 0 14px 35px rgba(16, 42, 67, 0.08);
+}
 
 * {
   box-sizing: border-box;
@@ -11,14 +25,20 @@ body {
 
   margin: 0;
 
+  min-width: 320px;
+
   font-family:
-    Arial,
-    Helvetica,
+    "Trebuchet MS",
+    "Segoe UI",
     sans-serif;
 
-  background: #f3f4f6;
+  background:
+    radial-gradient(circle at top right, #e5f1fb 0, transparent 34%),
+    var(--canvas);
 
-  color: #1f2937;
+  color: var(--ink);
+
+  line-height: 1.5;
 
 }
 
@@ -29,16 +49,13 @@ body {
 
 .header {
 
-  background:
-    linear-gradient(
-      135deg,
-      #1d4ed8,
-      #2563eb
-    );
+  background: linear-gradient(135deg, var(--navy), var(--blue-dark));
 
   color: white;
 
-  padding: 25px 20px;
+  padding: 28px 20px;
+
+  border-bottom: 4px solid #55b6d9;
 
 }
 
@@ -60,8 +77,8 @@ body {
 
 .logo {
 
-  width: 60px;
-  height: 60px;
+  width: 68px;
+  height: 68px;
 
   display: flex;
 
@@ -70,9 +87,13 @@ body {
 
   font-size: 30px;
 
-  background: rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.14);
 
-  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.28);
+
+  border-radius: 18px;
+
+  box-shadow: 0 8px 20px rgba(0,0,0,0.14);
 
 }
 
@@ -93,7 +114,9 @@ body {
 
   margin: 0;
 
-  font-size: 24px;
+  font-size: clamp(21px, 3vw, 30px);
+
+  letter-spacing: 0.2px;
 
 }
 
@@ -102,7 +125,9 @@ body {
 
   margin: 5px 0 0;
 
-  opacity: 0.85;
+  color: #d9edf8;
+
+  opacity: 1;
 
   font-size: 14px;
 
@@ -121,7 +146,7 @@ body {
 
   margin: auto;
 
-  padding: 20px 15px 50px;
+  padding: 34px 15px 42px;
 
 }
 
@@ -132,17 +157,17 @@ body {
 
 .card {
 
-  background: white;
+  background: var(--surface);
 
-  border-radius: 18px;
+  border: 1px solid rgba(228, 231, 236, 0.9);
 
-  padding: 20px;
+  border-radius: 14px;
+
+  padding: clamp(20px, 3vw, 30px);
 
   margin-bottom: 20px;
 
-  box-shadow:
-    0 4px 20px
-    rgba(0,0,0,0.08);
+  box-shadow: var(--shadow);
 
 }
 
@@ -151,16 +176,20 @@ body {
 
   margin: 0;
 
-  font-size: 20px;
+  color: var(--navy);
+
+  font-size: 21px;
+
+  letter-spacing: -0.2px;
 
 }
 
 
 .card p {
 
-  color: #6b7280;
+  color: var(--muted);
 
-  margin-top: 7px;
+  margin: 7px 0 22px;
 
 }
 
@@ -194,7 +223,9 @@ body {
 
 .form-group label {
 
-  font-size: 14px;
+  color: #344054;
+
+  font-size: 13px;
 
   font-weight: 600;
 
@@ -212,13 +243,19 @@ textarea {
   border:
 
     1px solid
-    #d1d5db;
+    var(--line);
 
-  border-radius: 10px;
+  border-radius: 9px;
 
-  padding: 13px;
+  padding: 12px 13px;
+
+  font-family: inherit;
 
   font-size: 15px;
+
+  color: var(--ink);
+
+  background: #fcfdff;
 
   outline: none;
 
@@ -231,11 +268,11 @@ input:focus,
 select:focus,
 textarea:focus {
 
-  border-color: #2563eb;
+  border-color: var(--blue);
 
   box-shadow:
     0 0 0 3px
-    rgba(37,99,235,0.12);
+    rgba(23,105,170,0.13);
 
 }
 
@@ -264,15 +301,17 @@ textarea {
 
   border: none;
 
-  border-radius: 12px;
+  border-radius: 9px;
 
   padding: 15px;
 
-  background: #2563eb;
+  background: var(--blue);
 
   color: white;
 
-  font-size: 16px;
+  font-family: inherit;
+
+  font-size: 15px;
 
   font-weight: bold;
 
@@ -283,7 +322,9 @@ textarea {
 
 .btn-primary:hover {
 
-  background: #1d4ed8;
+  background: var(--blue-dark);
+
+  transform: translateY(-1px);
 
 }
 
@@ -299,13 +340,19 @@ textarea {
 
 .btn-secondary {
 
-  border: none;
+  border: 1px solid var(--line);
 
   padding: 11px 15px;
 
-  border-radius: 10px;
+  border-radius: 9px;
 
-  background: #e5e7eb;
+  background: #f8fafc;
+
+  color: #344054;
+
+  font-family: inherit;
+
+  font-weight: 600;
 
   cursor: pointer;
 
@@ -328,6 +375,8 @@ textarea {
 
   gap: 20px;
 
+  padding-bottom: 4px;
+
 }
 
 
@@ -348,6 +397,10 @@ textarea {
 
   margin-top: 20px;
 
+  border: 1px solid var(--line);
+
+  border-radius: 10px;
+
 }
 
 
@@ -359,18 +412,26 @@ table {
 
   min-width: 850px;
 
+  background: var(--surface);
+
 }
 
 
 th {
 
-  background: #f3f4f6;
+  background: #f2f7fb;
+
+  color: #475467;
 
   text-align: left;
 
-  padding: 13px;
+  padding: 14px 13px;
 
   font-size: 13px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.5px;
 
 }
 
@@ -381,9 +442,23 @@ td {
 
   border-bottom:
     1px solid
-    #e5e7eb;
+    var(--line);
 
   font-size: 14px;
+
+}
+
+
+tbody tr {
+
+  transition: background 0.18s ease;
+
+}
+
+
+tbody tr:hover {
+
+  background: #f8fbfd;
 
 }
 
@@ -403,29 +478,29 @@ td {
 
 .badge-pemasukan {
 
-  background: #dcfce7;
+  background: #e7f6ef;
 
-  color: #166534;
+  color: var(--green);
 
 }
 
 
 .badge-pengeluaran {
 
-  background: #fee2e2;
+  background: #fcebed;
 
-  color: #991b1b;
+  color: var(--red);
 
 }
 
 
 .btn-hapus {
 
-  border: none;
+  border: 1px solid #f2c8ce;
 
-  background: #fee2e2;
+  background: #fff5f6;
 
-  color: #dc2626;
+  color: var(--red);
 
   padding: 8px 10px;
 
@@ -459,8 +534,9 @@ td {
 
   inset: 0;
 
-  background:
-    rgba(0,0,0,0.5);
+  background: rgba(16, 42, 67, 0.58);
+
+  backdrop-filter: blur(4px);
 
   z-index: 9999;
 
@@ -481,7 +557,7 @@ td {
 
   background: white;
 
-  border-radius: 20px;
+  border-radius: 14px;
 
   padding: 30px;
 
@@ -596,9 +672,9 @@ td {
 
   border: none;
 
-  border-radius: 10px;
+  border-radius: 9px;
 
-  background: #2563eb;
+  background: var(--blue);
 
   color: white;
 
@@ -640,7 +716,7 @@ td {
 
   padding: 12px;
 
-  border-radius: 10px;
+  border-radius: 9px;
 
   cursor: pointer;
 
@@ -688,6 +764,8 @@ td {
 
     width: 100%;
 
+    align-items: stretch;
+
   }
 
 
@@ -704,6 +782,44 @@ td {
 
   }
 
+
+  .header {
+
+    padding: 22px 15px;
+
+  }
+
+
+  .header-content {
+
+    align-items: flex-start;
+
+  }
+
+
+  .logo {
+
+    width: 56px;
+    height: 56px;
+
+    flex: 0 0 56px;
+
+  }
+
+
+  .container {
+
+    padding-top: 22px;
+
+  }
+
+
+  .card {
+
+    padding: 18px;
+
+  }
+
 }
 
 
@@ -713,11 +829,11 @@ td {
 
 .site-footer {
 
-  padding: 0 20px 30px;
+  padding: 0 20px 32px;
 
   text-align: center;
 
-  color: #6b7280;
+  color: var(--muted);
 
   font-size: 13px;
 
