@@ -1,221 +1,631 @@
-# Budget Tracker OSIS 2026/2027
+<div align="center">
 
-![Logo OSIS SMAFISTA](assets/logo_OSIS_SMAFISTA.png)
+<img src="assets/logo_OSIS_SMAFISTA.png" alt="Logo OSIS SMAFISTA" width="160"/>
 
-Website pencatatan keuangan OSIS untuk periode 2026/2027. **Budget Tracker OSIS** digunakan untuk mencatat seluruh pemasukan dan pengeluaran yang dilakukan oleh OSIS, mulai dari awal bulan sampai akhir masa jabatan.
+# 💰 Budget Tracker OSIS
 
-Aplikasi ini membantu pengurus OSIS mencatat transaksi secara lebih rapi, terpusat, dan mudah ditelusuri. Data yang dimasukkan melalui website dikirim ke Google Sheets melalui Google Apps Script sehingga pencatatan dapat dilakukan dari browser tanpa harus mengedit spreadsheet secara manual.
+### Sistem Pencatatan & Monitoring Keuangan OSIS
 
-## Tujuan Pembuatan
+**Periode Kepengurusan 2026/2027**
+
+<br>
+
+[![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5\&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
+[![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3\&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
+[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript\&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![Google Apps Script](https://img.shields.io/badge/Google%20Apps%20Script-4285F4?logo=google\&logoColor=white)](https://script.google.com/)
+[![Google Sheets](https://img.shields.io/badge/Google%20Sheets-34A853?logo=googlesheets\&logoColor=white)](https://www.google.com/sheets/about/)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-222222?logo=githubpages\&logoColor=white)](https://pages.github.com/)
+
+<br>
+
+[![Status](https://img.shields.io/badge/Status-Active-success)]()
+[![License](https://img.shields.io/badge/License-Private-red)]()
+[![OSIS](https://img.shields.io/badge/Organization-OSIS%20SMAFISTA-blue)]()
+
+<br>
+
+<a href="#-fitur-utama">✨ Features</a> • <a href="#-cara-menggunakan">📖 Usage</a> • <a href="#-menjalankan-secara-lokal">💻 Local Setup</a> • <a href="#-konfigurasi-backend">🔌 API</a> • <a href="#-deployment">🚀 Deployment</a>
+
+</div>
+
+---
+
+## 🌐 Live Demo
+
+> 🚀 **Website:** `MASUKKAN_URL_GITHUB_PAGES_DI_SINI`
+
+<div align="center">
+
+[![Open Website](https://img.shields.io/badge/🌐%20Open%20Website-Live%20Demo-success?style=for-the-badge)](MASUKKAN_URL_GITHUB_PAGES)
+
+</div>
+
+---
+
+# 📖 About The Project
+
+**Budget Tracker OSIS** adalah aplikasi berbasis web yang dirancang untuk membantu pengurus **OSIS SMA Al-Fityan School Tangerang** dalam mencatat dan memantau kondisi keuangan organisasi.
+
+Aplikasi ini digunakan untuk mencatat seluruh transaksi **pemasukan dan pengeluaran** selama periode kepengurusan **2026/2027**.
+
+Berbeda dengan pencatatan manual menggunakan spreadsheet, sistem ini menyediakan antarmuka berbasis web sehingga pengurus dapat melakukan pencatatan transaksi dengan lebih mudah, terstruktur, dan terpusat.
+
+Data yang dimasukkan melalui website akan diteruskan ke **Google Apps Script** dan disimpan secara otomatis di **Google Sheets**.
+
+```text
+Website
+   ↓
+Google Apps Script API
+   ↓
+Google Sheets Database
+```
+
+Dengan sistem ini, Google Sheets tetap digunakan sebagai pusat penyimpanan data tanpa mengharuskan pengurus untuk mengedit spreadsheet secara langsung.
+
+---
+
+# 🎯 Project Goals
 
 Project ini dibuat untuk:
 
-- Membantu OSIS mencatat setiap pemasukan dan pengeluaran secara teratur.
-- Menjaga riwayat keuangan agar terdokumentasi dari awal bulan hingga akhir masa jabatan.
-- Mengurangi risiko catatan hilang, tercecer, atau tertulis ganda.
-- Memudahkan pengurus melihat saldo dan riwayat transaksi berdasarkan bulan.
-- Mendukung transparansi dan pertanggungjawaban keuangan OSIS.
-- Mempercepat proses pencatatan karena data langsung diteruskan ke spreadsheet pusat.
+* 📌 Mencatat pemasukan dan pengeluaran secara terstruktur.
+* 📚 Menyimpan riwayat keuangan selama masa kepengurusan.
+* 🔎 Mempermudah pencarian dan penelusuran transaksi.
+* 💰 Menghitung saldo secara otomatis.
+* 📊 Memantau total pemasukan dan pengeluaran.
+* 🛡️ Mengurangi risiko data hilang atau tercatat ganda.
+* 🤝 Mendukung transparansi keuangan organisasi.
+* ⚡ Mempercepat proses pencatatan transaksi.
 
-## Cara Pembuatan
+---
 
-<details>
-<summary>Klik untuk melihat langkah-langkah pembuatan Budget Tracker OSIS</summary>
+# ✨ Fitur Utama
 
-### 1. Analisis Kebutuhan
+| Fitur                 | Deskripsi                                   |
+| --------------------- | ------------------------------------------- |
+| ➕ Tambah Transaksi    | Menambahkan pemasukan atau pengeluaran      |
+| 📅 Filter Bulan       | Menampilkan transaksi berdasarkan bulan     |
+| 💰 Format Rupiah      | Nominal diformat secara otomatis            |
+| 📊 Statistik Keuangan | Total pemasukan, pengeluaran, dan saldo     |
+| 📋 Riwayat Transaksi  | Menampilkan seluruh transaksi yang tercatat |
+| 🗑️ Hapus Transaksi   | Menghapus transaksi yang tidak diperlukan   |
+| ☁️ Cloud Database     | Data disimpan di Google Sheets              |
+| 📱 Responsive Design  | Mendukung desktop dan mobile                |
+| ⚡ Real-Time Update    | Riwayat diperbarui setelah transaksi        |
 
-- Menentukan data yang perlu dicatat: bulan, nama transaksi, tanggal, jenis, nominal, penginput, dan keterangan.
-- Menentukan fitur utama: tambah, lihat, hitung saldo, dan hapus transaksi.
+---
 
-### 2. Menyiapkan Database
+# 🧰 Tech Stack
 
-- Membuat Google Sheets sebagai tempat penyimpanan data keuangan OSIS.
-- Menentukan kolom tabel agar sesuai dengan data pada formulir website.
-- Menyiapkan daftar bulan dan struktur data transaksi.
+<div align="center">
 
-### 3. Membuat Backend
+| Frontend   | Backend            | Database          | Deployment     |
+| ---------- | ------------------ | ----------------- | -------------- |
+| HTML       | Google Apps Script | Google Sheets     | GitHub Pages   |
+| CSS        | JavaScript API     | Cloud Spreadsheet | GitHub Actions |
+| JavaScript | Web App            | Google Cloud      | CI/CD          |
 
-- Membuat Google Apps Script yang terhubung ke Google Sheets.
-- Membuat endpoint untuk mengambil bulan dan riwayat transaksi.
-- Membuat proses untuk menambah dan menghapus transaksi.
-- Mengatur response backend dalam format JSON.
-- Melakukan deployment Google Apps Script sebagai Web App.
+</div>
 
-### 4. Membuat Frontend
+<br>
 
-- Membuat struktur halaman menggunakan `index.html`.
-- Membuat tampilan responsif menggunakan `style.css`.
-- Membuat logika formulir dan tabel menggunakan `script.js`.
-- Menambahkan logo OSIS, ringkasan saldo, popup, dan tombol aksi.
+### Frontend
 
-### 5. Menghubungkan Frontend dan Backend
+```text
+HTML5
+CSS3
+JavaScript
+```
 
-- Menyimpan URL backend pada `config.js` lokal.
-- Mengirim data transaksi dari website ke Google Apps Script menggunakan `fetch()`.
-- Membaca response JSON untuk menampilkan status berhasil atau gagal.
-- Memuat ulang riwayat setelah transaksi ditambah atau dihapus.
+### Backend
 
-### 6. Menambahkan Keamanan Konfigurasi
+```text
+Google Apps Script
+REST-like API
+JSON Response
+```
 
-- Memasukkan `config.js` ke `.gitignore` agar URL API tidak ikut diunggah.
-- Menyediakan `config.example.js` sebagai contoh konfigurasi.
-- Menyimpan URL API pada GitHub Secret `API_URL` untuk proses deployment.
+### Database
 
-### 7. Pengujian
+```text
+Google Sheets
+```
 
-- Menguji penambahan transaksi pemasukan.
-- Menguji penambahan transaksi pengeluaran.
-- Memastikan nominal dan saldo dihitung dengan benar.
-- Menguji filter riwayat berdasarkan bulan.
-- Menguji penghapusan transaksi.
-- Memeriksa tampilan pada desktop dan perangkat mobile.
+### Deployment
 
-### 8. Deployment
+```text
+GitHub
+GitHub Actions
+GitHub Pages
+```
 
-- Mengunggah project ke repository GitHub.
-- Mengatur secret `API_URL` pada repository.
-- Mengaktifkan GitHub Pages dengan source **GitHub Actions**.
-- Menjalankan workflow deployment.
-- Memeriksa website setelah berhasil dipublikasikan.
+---
 
-</details>
-
-## Fitur Utama
-
-- Menambahkan catatan pemasukan dan pengeluaran.
-- Memilih bulan, tanggal, dan jenis transaksi.
-- Mencatat nama transaksi, nominal, penginput, dan keterangan.
-- Memformat nominal secara otomatis ke Rupiah.
-- Menampilkan riwayat transaksi berdasarkan bulan.
-- Menampilkan total pemasukan, total pengeluaran, dan saldo.
-- Menghapus transaksi yang tidak diperlukan.
-- Menyimpan data secara terpusat melalui Google Sheets.
-- Dapat digunakan melalui GitHub Pages.
-
-## Alur Kerja Aplikasi
+# 🏗️ System Architecture
 
 ```mermaid
 flowchart LR
-		A[Pengurus OSIS mengisi form] --> B[Website memvalidasi data]
-		B --> C[JavaScript mengirim request]
-		C --> D[Google Apps Script]
-		D --> E[Google Sheets menyimpan transaksi]
-		E --> F[Website menerima response JSON]
-		F --> G[Riwayat dan saldo diperbarui]
+
+A[👤 Pengurus OSIS] --> B[🌐 Budget Tracker Website]
+
+B --> C{Validasi Data}
+
+C -->|Valid| D[📡 Fetch API]
+
+C -->|Invalid| E[⚠️ Error Message]
+
+D --> F[⚙️ Google Apps Script]
+
+F --> G[(📊 Google Sheets)]
+
+G --> F
+
+F --> H[📦 JSON Response]
+
+H --> B
+
+B --> I[📋 Update Riwayat]
+B --> J[💰 Update Saldo]
 ```
 
-### Penjelasan Alur
+---
 
-1. Pengurus OSIS membuka website dan mengisi formulir transaksi.
-2. Pengurus memilih bulan, tanggal, jenis transaksi, dan mengisi nominal serta keterangan.
-3. JavaScript mengubah data formulir menjadi request ke endpoint Google Apps Script.
-4. Google Apps Script menerima request dan menulis data ke Google Sheets.
-5. Google Sheets menjadi tempat penyimpanan utama seluruh catatan keuangan.
-6. Backend mengirim response dalam format JSON ke website.
-7. Website menampilkan pesan berhasil dan memperbarui riwayat transaksi serta saldo.
+# 🔄 Application Flow
 
-> Secara teknis, website menulis data ke Google Sheets. File spreadsheet tersebut dapat diunduh atau diekspor ke format Microsoft Excel jika diperlukan.
+```mermaid
+sequenceDiagram
 
-## Struktur File
+participant U as 👤 Pengurus
+participant W as 🌐 Website
+participant A as ⚙️ Apps Script
+participant S as 📊 Google Sheets
+
+U->>W: Mengisi Form Transaksi
+W->>W: Validasi Data
+W->>A: Kirim Request
+A->>S: Simpan / Ambil Data
+S-->>A: Response Data
+A-->>W: JSON Response
+W-->>U: Update Riwayat & Saldo
+```
+
+---
+
+# 📂 Project Structure
 
 ```text
 .
-├── index.html                         # Struktur halaman website
-├── style.css                          # Tampilan, layout, dan responsive design
-├── script.js                          # Logika aplikasi dan komunikasi dengan backend
+├── index.html
+├── style.css
+├── script.js
+│
 ├── assets/
-│   └── logo_OSIS_SMAFISTA.png         # Logo OSIS yang ditampilkan di header dan README
-├── config.example.js                  # Template konfigurasi API tanpa URL asli
-├── config.js                          # Konfigurasi lokal, tidak diunggah ke Git
-├── .gitignore                          # Daftar file yang tidak diunggah ke Git
-├── .github/workflows/
-│   └── deploy-pages.yml               # Workflow deployment ke GitHub Pages
-└── README.md                          # Dokumentasi proyek
+│   └── logo_OSIS_SMAFISTA.png
+│
+├── config.example.js
+├── config.js
+├── .gitignore
+│
+├── .github/
+│   └── workflows/
+│       └── deploy-pages.yml
+│
+└── README.md
 ```
 
-## Cara Menggunakan
+### File Description
 
-### Menambahkan Transaksi
+| File                | Description                           |
+| ------------------- | ------------------------------------- |
+| `index.html`        | Struktur utama website                |
+| `style.css`         | Styling dan responsive layout         |
+| `script.js`         | Logika aplikasi dan API communication |
+| `assets/`           | Logo dan aset visual                  |
+| `config.example.js` | Template konfigurasi API              |
+| `config.js`         | Konfigurasi lokal                     |
+| `.gitignore`        | File yang tidak di-track Git          |
+| `deploy-pages.yml`  | Workflow GitHub Pages                 |
+| `README.md`         | Dokumentasi project                   |
 
-1. Buka website Budget Tracker OSIS.
-2. Pilih bulan transaksi.
-3. Masukkan nama transaksi.
-4. Pilih tanggal dan jenis transaksi: **Pemasukan** atau **Pengeluaran**.
-5. Masukkan nominal transaksi.
-6. Isi nama penginput.
-7. Tambahkan keterangan jika diperlukan.
-8. Klik **Simpan Transaksi**.
-9. Setelah berhasil, data akan masuk ke Google Sheets dan muncul pada riwayat transaksi.
+---
 
-### Melihat Riwayat dan Saldo
+# 🚀 Quick Start
 
-1. Pilih bulan pada bagian riwayat transaksi.
-2. Website akan mengambil data bulan tersebut dari Google Sheets.
-3. Periksa daftar transaksi, total pemasukan, total pengeluaran, dan saldo.
+## 1️⃣ Clone Repository
 
-### Menghapus Transaksi
+```bash
+git clone https://github.com/USERNAME/NAMA-REPOSITORY.git
+```
 
-1. Temukan transaksi yang ingin dihapus pada tabel riwayat.
-2. Klik tombol hapus pada baris transaksi.
-3. Periksa kembali transaksi yang dipilih.
-4. Klik **Hapus** untuk menghapusnya dari Google Sheets.
+Masuk ke folder project:
 
-## Menjalankan Secara Lokal
+```bash
+cd NAMA-REPOSITORY
+```
 
-1. Clone atau download repository ini.
-2. Salin `config.example.js` menjadi `config.js`.
-3. Isi `config.js` dengan URL deployment Google Apps Script:
+---
+
+## 2️⃣ Setup Configuration
+
+Salin file:
+
+```text
+config.example.js
+```
+
+Menjadi:
+
+```text
+config.js
+```
+
+Kemudian isi URL Google Apps Script:
 
 ```js
 window.APP_CONFIG = {
-	API_URL: 'URL_GOOGLE_APPS_SCRIPT_MILIKMU'
+    API_URL: "URL_GOOGLE_APPS_SCRIPT_MILIKMU"
 };
 ```
 
-4. Buka `index.html` menggunakan Live Server atau server lokal lainnya.
-5. Pastikan browser terhubung ke internet agar website dapat berkomunikasi dengan Google Apps Script.
+> ⚠️ Jangan mengunggah `config.js` ke repository public.
 
-File `config.js` sengaja dimasukkan ke `.gitignore` karena berisi konfigurasi lokal.
+---
 
-## Konfigurasi Backend
+## 3️⃣ Run Locally
 
-Backend Google Apps Script menyediakan endpoint berikut:
+Gunakan local server seperti:
 
-- `GET?action=months` untuk mengambil daftar bulan.
-- `GET?action=riwayat&bulan=...` untuk mengambil riwayat transaksi.
-- `POST` dengan `action: "tambah"` untuk menyimpan transaksi.
-- `POST` dengan `action: "hapus"` untuk menghapus transaksi.
+* VS Code Live Server
+* Python HTTP Server
+* Local Web Server lainnya
 
-Google Apps Script harus memiliki akses ke Google Sheets yang digunakan sebagai database pencatatan keuangan OSIS. Atur izin deployment sesuai kebutuhan dan pastikan endpoint dapat menerima request dari website.
+Contoh menggunakan Python:
 
-## Deployment ke GitHub Pages
+```bash
+python -m http.server 8000
+```
 
-1. Push seluruh isi project ke repository GitHub.
-2. Buka **Settings** > **Secrets and variables** > **Actions**.
-3. Buat repository secret dengan konfigurasi berikut:
+Kemudian buka:
 
-	 ```text
-	 Name: API_URL
-	 Secret: URL deployment Google Apps Script
-	 ```
+```text
+http://localhost:8000
+```
 
-4. Buka **Settings** > **Pages**.
-5. Pilih **GitHub Actions** sebagai source deployment.
-6. Push perubahan ke branch `main` atau jalankan workflow dari tab **Actions**.
-7. Tunggu workflow selesai, lalu buka URL GitHub Pages yang diberikan GitHub.
+---
 
-Workflow akan membuat `config.js` secara otomatis saat proses deployment menggunakan secret `API_URL`. Jangan commit `config.js` atau menaruh URL API asli di `config.example.js`.
+# 📖 Cara Menggunakan
 
-## Keamanan dan Catatan
+## ➕ Menambahkan Transaksi
 
-- Jangan menyimpan password, token, API key, atau kredensial rahasia di file frontend.
-- `config.js` tidak boleh diunggah ke repository public.
-- URL API yang dipakai oleh website tetap dapat terlihat oleh pengguna melalui browser karena frontend harus mengakses endpoint tersebut.
-- Data keuangan tetap harus dilindungi melalui pengaturan akses Google Sheets dan Google Apps Script.
-- Pastikan transaksi diperiksa sebelum disimpan atau dihapus.
+1. Buka website.
 
-## Copyright
+2. Pilih bulan transaksi.
 
-&copy; 2026 OSIS SMA Al-Fityan School Tangerang. All rights reserved.
+3. Masukkan nama transaksi.
 
-Developed by [Arza Maulana Zafar](https://github.com/Arza707). Designed with AI assistance.
+4. Pilih tanggal.
+
+5. Pilih jenis transaksi:
+
+   * 🟢 Pemasukan
+   * 🔴 Pengeluaran
+
+6. Masukkan nominal.
+
+7. Masukkan nama penginput.
+
+8. Tambahkan keterangan jika diperlukan.
+
+9. Klik **Simpan Transaksi**.
+
+Data akan dikirim ke Google Apps Script dan disimpan ke Google Sheets.
+
+---
+
+## 📊 Melihat Riwayat
+
+1. Pilih bulan.
+2. Website mengambil data dari backend.
+3. Riwayat transaksi ditampilkan.
+4. Sistem menghitung:
+
+```text
+Total Pemasukan
+        ↓
+Total Pengeluaran
+        ↓
+Saldo Akhir
+```
+
+---
+
+## 🗑️ Menghapus Transaksi
+
+1. Cari transaksi pada tabel.
+2. Klik tombol **Hapus**.
+3. Konfirmasi penghapusan.
+4. Backend menghapus data dari Google Sheets.
+5. Riwayat diperbarui.
+
+---
+
+# 🔌 API Documentation
+
+Backend menggunakan **Google Apps Script Web App**.
+
+## 📅 Get Available Months
+
+```http
+GET ?action=months
+```
+
+---
+
+## 📋 Get Transaction History
+
+```http
+GET ?action=riwayat&bulan=JANUARI
+```
+
+---
+
+## ➕ Add Transaction
+
+```http
+POST
+```
+
+Contoh payload:
+
+```json
+{
+    "action": "tambah",
+    "bulan": "JANUARI",
+    "nama": "Pembelian Perlengkapan",
+    "tanggal": "2026-09-05",
+    "jenis": "Pengeluaran",
+    "nominal": 150000,
+    "penginput": "Nama Pengurus",
+    "keterangan": "Pembelian perlengkapan kegiatan"
+}
+```
+
+---
+
+## 🗑️ Delete Transaction
+
+```http
+POST
+```
+
+Contoh payload:
+
+```json
+{
+    "action": "hapus",
+    "id": "TRANSACTION_ID"
+}
+```
+
+---
+
+# 🔐 Configuration & Security
+
+Project menggunakan file konfigurasi:
+
+```text
+config.js
+```
+
+File tersebut dimasukkan ke `.gitignore`:
+
+```gitignore
+config.js
+```
+
+Template konfigurasi tersedia melalui:
+
+```text
+config.example.js
+```
+
+---
+
+## GitHub Secret
+
+Saat deployment, URL API dapat disimpan sebagai Repository Secret:
+
+```text
+Name: API_URL
+Value: URL Google Apps Script
+```
+
+Workflow GitHub Actions dapat membuat `config.js` secara otomatis menggunakan secret tersebut.
+
+> ⚠️ **Important:** URL API yang digunakan oleh frontend pada akhirnya tetap dapat terlihat melalui browser karena website harus mengakses endpoint tersebut.
+
+Karena itu, jangan menganggap URL API sebagai sistem keamanan utama.
+
+Keamanan data sebaiknya diterapkan melalui:
+
+* Pengaturan akses Google Sheets.
+* Validasi request pada Google Apps Script.
+* Pembatasan akses backend.
+* Validasi data input.
+* Audit terhadap transaksi yang dilakukan.
+
+---
+
+# 🚀 Deployment
+
+Project menggunakan:
+
+```text
+GitHub Repository
+        ↓
+GitHub Actions
+        ↓
+Generate config.js
+        ↓
+GitHub Pages
+```
+
+## Setup
+
+### 1. Push Project
+
+Push seluruh project ke GitHub.
+
+---
+
+### 2. Add Repository Secret
+
+Buka:
+
+```text
+Settings
+→ Secrets and variables
+→ Actions
+```
+
+Tambahkan:
+
+```text
+API_URL
+```
+
+Isi dengan URL deployment Google Apps Script.
+
+---
+
+### 3. Enable GitHub Pages
+
+Buka:
+
+```text
+Settings
+→ Pages
+```
+
+Pilih:
+
+```text
+Source: GitHub Actions
+```
+
+---
+
+### 4. Deploy
+
+Push ke branch:
+
+```text
+main
+```
+
+GitHub Actions akan menjalankan workflow deployment secara otomatis.
+
+---
+
+# 🧪 Testing Checklist
+
+* [x] Menambahkan transaksi pemasukan.
+* [x] Menambahkan transaksi pengeluaran.
+* [x] Validasi input.
+* [x] Format nominal Rupiah.
+* [x] Perhitungan total pemasukan.
+* [x] Perhitungan total pengeluaran.
+* [x] Perhitungan saldo.
+* [x] Filter transaksi berdasarkan bulan.
+* [x] Penghapusan transaksi.
+* [x] Tampilan desktop.
+* [x] Tampilan mobile.
+
+---
+
+# 🗺️ Roadmap
+
+Beberapa fitur yang direncanakan untuk pengembangan selanjutnya:
+
+* [ ] 🔐 Sistem login.
+* [ ] 👥 Role-based access.
+* [ ] 📊 Dashboard statistik.
+* [ ] 📈 Grafik keuangan.
+* [ ] 📁 Export Excel.
+* [ ] 📄 Export PDF.
+* [ ] 🔍 Search transaksi.
+* [ ] 🏷️ Kategori transaksi.
+* [ ] 📅 Filter rentang tanggal.
+* [ ] 📝 Audit log.
+* [ ] 💾 Sistem backup.
+* [ ] 🔔 Notifikasi transaksi.
+
+---
+
+# 🤝 Contribution
+
+Project ini dikembangkan untuk kebutuhan internal **OSIS SMA Al-Fityan School Tangerang**.
+
+Apabila project dikembangkan lebih lanjut, pastikan setiap perubahan:
+
+1. Tidak merusak struktur sistem.
+2. Tetap menjaga keamanan data.
+3. Mengikuti struktur kode yang telah digunakan.
+4. Diuji sebelum di-deploy.
+
+---
+
+# 👨‍💻 Developer
+
+<div align="center">
+
+### Developed by
+
+**Arza Maulana Zafar**
+
+[![GitHub](https://img.shields.io/badge/GitHub-Arza707-181717?style=for-the-badge\&logo=github)](https://github.com/Arza707)
+
+<br>
+
+**Designed with AI assistance 🤖**
+
+</div>
+
+---
+
+# 🏫 Organization
+
+<div align="center">
+
+### OSIS SMA Al-Fityan School Tangerang
+
+**Periode Kepengurusan 2026/2027**
+
+</div>
+
+---
+
+# 📄 Copyright
+
+<div align="center">
+
+Copyright © 2026
+
+**OSIS SMA Al-Fityan School Tangerang**
+
+All Rights Reserved.
+
+</div>
+
+---
+
+<div align="center">
+
+⭐ Jika project ini bermanfaat sebagai referensi, jangan lupa untuk memberikan **Star** pada repository!
+
+<br>
+
+**Made with ❤️ for OSIS SMAFISTA**
+
+</div>
