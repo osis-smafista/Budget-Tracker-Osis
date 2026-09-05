@@ -77,6 +77,18 @@ body {
 }
 
 
+.logo img {
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  display: block;
+
+}
+
+
 .header h1 {
 
   margin: 0;
@@ -691,5 +703,48 @@ td {
     font-size: 20px;
 
   }
+
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.site-footer {
+
+  padding: 0 20px 30px;
+
+  text-align: center;
+
+  color: #6b7280;
+
+  font-size: 13px;
+
+}
+
+
+.site-footer p {
+
+  margin: 0;
+
+}
+
+
+.site-footer a {
+
+  color: #2563eb;
+
+  text-decoration: none;
+
+  font-weight: 600;
+
+}
+
+
+.site-footer a:hover,
+.site-footer a:focus-visible {
+
+  text-decoration: underline;
 
 }
