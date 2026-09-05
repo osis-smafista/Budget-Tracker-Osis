@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Sistem Keuangan OSIS</title>
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+</head>
+
+
+<body>
+
+  <!-- =========================
+       HEADER
+  ========================== -->
+
+  <header class="header">
+
+    <div class="header-content">
+
+      <div class="logo">
+        💰
+      </div>
+
+      <div>
+        <h1>Sistem Keuangan OSIS</h1>
+
+        <p>
+          Pencatatan Pemasukan & Pengeluaran
+        </p>
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- =========================
+       MAIN
+  ========================== -->
+
+  <main class="container">
+
+
+    <!-- =========================
+         FORM TRANSAKSI
+    ========================== -->
+
+    <section class="card">
+
+      <div class="card-title">
+
+        <div>
+          <h2>Tambah Transaksi</h2>
+
+          <p>
+            Masukkan data pemasukan atau pengeluaran.
+          </p>
+        </div>
+
+      </div>
+
+
+      <form id="formTransaksi">
+
+
+        <div class="form-grid">
+
+
+          <!-- BULAN -->
+
+          <div class="form-group">
+
+            <label for="bulan">
+              Bulan
+            </label>
+
+            <select
+              id="bulan"
+              required
+            >
+              <option value="">
+                Pilih Bulan
+              </option>
+            </select>
+
+          </div>
+
+
+          <!-- NAMA BARANG -->
+
+          <div class="form-group">
+
+            <label for="namaBarang">
+              Nama Transaksi
+            </label>
+
+            <input
+              type="text"
+              id="namaBarang"
+              placeholder="Contoh: Pembelian ATK"
+              required
+            >
+
+          </div>
+
+
+          <!-- TANGGAL -->
+
+          <div class="form-group">
+
+            <label for="tanggal">
+              Tanggal
+            </label>
+
+            <input
+              type="date"
+              id="tanggal"
+              required
+            >
+
+          </div>
+
+
+          <!-- JENIS -->
+
+          <div class="form-group">
+
+            <label for="jenis">
+              Jenis Transaksi
+            </label>
+
+            <select
+              id="jenis"
+              required
+            >
+
+              <option value="">
+                Pilih Jenis
+              </option>
+
+              <option value="Pemasukan">
+                Pemasukan
+              </option>
+
+              <option value="Pengeluaran">
+                Pengeluaran
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- NOMINAL -->
+
+          <div class="form-group">
+
+            <label for="nominal">
+              Nominal
+            </label>
+
+            <input
+              type="text"
+              id="nominal"
+              placeholder="Rp 0"
+              inputmode="numeric"
+              required
+            >
+
+          </div>
+
+
+          <!-- DIINPUT OLEH -->
+
+          <div class="form-group">
+
+            <label for="diinputOleh">
+              Diinput Oleh
+            </label>
+
+            <input
+              type="text"
+              id="diinputOleh"
+              placeholder="Nama penginput"
+              required
+            >
+
+          </div>
+
+        </div>
+
+
+        <!-- KETERANGAN -->
+
+        <div class="form-group full-width">
+
+          <label for="keterangan">
+            Keterangan
+          </label>
+
+          <textarea
+            id="keterangan"
+            placeholder="Tambahkan keterangan jika diperlukan..."
+            rows="4"
+          ></textarea>
+
+        </div>
+
+
+        <button
+          type="submit"
+          class="btn-primary"
+          id="btnSimpan"
+        >
+
+          <span>
+            💾
+          </span>
+
+          Simpan Transaksi
+
+        </button>
+
+
+      </form>
+
+    </section>
+
+
+
+    <!-- =========================
+         RIWAYAT
+    ========================== -->
+
+    <section class="card">
+
+      <div class="riwayat-header">
+
+        <div>
+
+          <h2>
+            Riwayat Transaksi
+          </h2>
+
+          <p>
+            Lihat dan kelola transaksi yang sudah tercatat.
+          </p>
+
+        </div>
+
+
+        <div class="riwayat-controls">
+
+          <select id="bulanRiwayat">
+
+            <option value="">
+              Pilih Bulan
+            </option>
+
+          </select>
+
+
+          <button
+            type="button"
+            class="btn-secondary"
+            id="btnRefresh"
+          >
+            🔄 Refresh
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- LOADING RIWAYAT -->
+
+      <div
+        id="loadingRiwayat"
+        class="empty-state"
+      >
+
+        Pilih bulan untuk melihat transaksi.
+
+      </div>
+
+
+      <!-- TABLE -->
+
+      <div
+        class="table-wrapper"
+        id="tableWrapper"
+      >
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>Nama</th>
+
+              <th>Tanggal</th>
+
+              <th>Jenis</th>
+
+              <th>Nominal</th>
+
+              <th>Diinput Oleh</th>
+
+              <th>Keterangan</th>
+
+              <th>Aksi</th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody id="riwayatBody">
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+    </section>
+
+
+  </main>
+
+
+
+  <!-- =========================
+       POPUP OVERLAY
+  ========================== -->
+
+  <div
+    id="popupOverlay"
+    class="popup-overlay"
+  >
+
+    <div class="popup-box">
+
+
+      <!-- LOADING -->
+
+      <div id="loadingContent">
+
+        <div class="spinner"></div>
+
+        <h2 id="loadingTitle">
+          Menyimpan Data...
+        </h2>
+
+        <p id="loadingText">
+          Mohon tunggu sebentar.
+        </p>
+
+      </div>
+
+
+
+      <!-- SUCCESS -->
+
+      <div
+        id="successContent"
+        class="popup-content-hidden"
+      >
+
+        <div class="success-icon">
+          ✓
+        </div>
+
+        <h2>
+          Berhasil!
+        </h2>
+
+        <p id="successMessage">
+          Data Anda sudah berhasil tercatat.
+        </p>
+
+        <button
+          class="popup-button"
+          id="btnSuccess"
+        >
+          OK
+        </button>
+
+      </div>
+
+
+
+      <!-- ERROR -->
+
+      <div
+        id="errorContent"
+        class="popup-content-hidden"
+      >
+
+        <div class="error-icon">
+          !
+        </div>
+
+        <h2>
+          Terjadi Kesalahan
+        </h2>
+
+        <p id="popupErrorMessage">
+          Terjadi kesalahan.
+        </p>
+
+        <button
+          class="popup-button error-button"
+          id="btnError"
+        >
+          Tutup
+        </button>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =========================
+       KONFIRMASI HAPUS
+  ========================== -->
+
+  <div
+    id="deleteOverlay"
+    class="popup-overlay"
+  >
+
+    <div class="popup-box">
+
+      <div class="delete-icon">
+        🗑️
+      </div>
+
+      <h2>
+        Hapus Transaksi?
+      </h2>
+
+      <p>
+        Data yang dihapus tidak dapat dikembalikan.
+      </p>
+
+
+      <div class="delete-buttons">
+
+        <button
+          class="btn-cancel"
+          id="btnCancelDelete"
+        >
+          Batal
+        </button>
+
+
+        <button
+          class="btn-delete"
+          id="btnConfirmDelete"
+        >
+          Hapus
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <script src="script.js"></script>
+
+</body>
+
+</html>

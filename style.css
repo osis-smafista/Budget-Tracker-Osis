@@ -1,0 +1,695 @@
+/* =========================
+   RESET
+========================= */
+
+* {
+  box-sizing: border-box;
+}
+
+
+body {
+
+  margin: 0;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  background: #f3f4f6;
+
+  color: #1f2937;
+
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+
+  background:
+    linear-gradient(
+      135deg,
+      #1d4ed8,
+      #2563eb
+    );
+
+  color: white;
+
+  padding: 25px 20px;
+
+}
+
+
+.header-content {
+
+  max-width: 1200px;
+
+  margin: auto;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+}
+
+
+.logo {
+
+  width: 60px;
+  height: 60px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-size: 30px;
+
+  background: rgba(255,255,255,0.18);
+
+  border-radius: 16px;
+
+}
+
+
+.header h1 {
+
+  margin: 0;
+
+  font-size: 24px;
+
+}
+
+
+.header p {
+
+  margin: 5px 0 0;
+
+  opacity: 0.85;
+
+  font-size: 14px;
+
+}
+
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container {
+
+  width: 100%;
+
+  max-width: 1200px;
+
+  margin: auto;
+
+  padding: 20px 15px 50px;
+
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.card {
+
+  background: white;
+
+  border-radius: 18px;
+
+  padding: 20px;
+
+  margin-bottom: 20px;
+
+  box-shadow:
+    0 4px 20px
+    rgba(0,0,0,0.08);
+
+}
+
+
+.card h2 {
+
+  margin: 0;
+
+  font-size: 20px;
+
+}
+
+
+.card p {
+
+  color: #6b7280;
+
+  margin-top: 7px;
+
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.form-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, 1fr);
+
+  gap: 15px;
+
+}
+
+
+.form-group {
+
+  display: flex;
+
+  flex-direction: column;
+
+  margin-bottom: 15px;
+
+}
+
+
+.form-group label {
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  margin-bottom: 7px;
+
+}
+
+
+input,
+select,
+textarea {
+
+  width: 100%;
+
+  border:
+
+    1px solid
+    #d1d5db;
+
+  border-radius: 10px;
+
+  padding: 13px;
+
+  font-size: 15px;
+
+  outline: none;
+
+  transition: 0.2s;
+
+}
+
+
+input:focus,
+select:focus,
+textarea:focus {
+
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(37,99,235,0.12);
+
+}
+
+
+textarea {
+
+  resize: vertical;
+
+}
+
+
+.full-width {
+
+  width: 100%;
+
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.btn-primary {
+
+  width: 100%;
+
+  border: none;
+
+  border-radius: 12px;
+
+  padding: 15px;
+
+  background: #2563eb;
+
+  color: white;
+
+  font-size: 16px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+}
+
+
+.btn-primary:hover {
+
+  background: #1d4ed8;
+
+}
+
+
+.btn-primary:disabled {
+
+  opacity: 0.6;
+
+  cursor: not-allowed;
+
+}
+
+
+.btn-secondary {
+
+  border: none;
+
+  padding: 11px 15px;
+
+  border-radius: 10px;
+
+  background: #e5e7eb;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+}
+
+
+/* =========================
+   RIWAYAT
+========================= */
+
+.riwayat-header {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+
+  gap: 20px;
+
+}
+
+
+.riwayat-controls {
+
+  display: flex;
+
+  gap: 10px;
+
+}
+
+
+.table-wrapper {
+
+  width: 100%;
+
+  overflow-x: auto;
+
+  margin-top: 20px;
+
+}
+
+
+table {
+
+  width: 100%;
+
+  border-collapse: collapse;
+
+  min-width: 850px;
+
+}
+
+
+th {
+
+  background: #f3f4f6;
+
+  text-align: left;
+
+  padding: 13px;
+
+  font-size: 13px;
+
+}
+
+
+td {
+
+  padding: 13px;
+
+  border-bottom:
+    1px solid
+    #e5e7eb;
+
+  font-size: 14px;
+
+}
+
+
+.badge {
+
+  padding: 6px 10px;
+
+  border-radius: 999px;
+
+  font-size: 12px;
+
+  font-weight: bold;
+
+}
+
+
+.badge-pemasukan {
+
+  background: #dcfce7;
+
+  color: #166534;
+
+}
+
+
+.badge-pengeluaran {
+
+  background: #fee2e2;
+
+  color: #991b1b;
+
+}
+
+
+.btn-hapus {
+
+  border: none;
+
+  background: #fee2e2;
+
+  color: #dc2626;
+
+  padding: 8px 10px;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+}
+
+
+.empty-state {
+
+  text-align: center;
+
+  padding: 35px;
+
+  color: #6b7280;
+
+}
+
+
+/* =========================
+   POPUP
+========================= */
+
+.popup-overlay {
+
+  display: none;
+
+  position: fixed;
+
+  inset: 0;
+
+  background:
+    rgba(0,0,0,0.5);
+
+  z-index: 9999;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 20px;
+
+}
+
+
+.popup-box {
+
+  width: 100%;
+
+  max-width: 400px;
+
+  background: white;
+
+  border-radius: 20px;
+
+  padding: 30px;
+
+  text-align: center;
+
+  box-shadow:
+    0 20px 60px
+    rgba(0,0,0,0.3);
+
+}
+
+
+.popup-content-hidden {
+
+  display: none;
+
+}
+
+
+.spinner {
+
+  width: 55px;
+
+  height: 55px;
+
+  border-radius: 50%;
+
+  border:
+    6px solid
+    #e5e7eb;
+
+  border-top-color:
+    #2563eb;
+
+  margin:
+    0 auto 20px;
+
+  animation:
+    spin 1s linear infinite;
+
+}
+
+
+@keyframes spin {
+
+  to {
+
+    transform:
+      rotate(360deg);
+
+  }
+
+}
+
+
+.success-icon,
+.error-icon,
+.delete-icon {
+
+  width: 70px;
+
+  height: 70px;
+
+  border-radius: 50%;
+
+  margin:
+    0 auto 20px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 40px;
+
+}
+
+
+.success-icon {
+
+  background: #22c55e;
+
+  color: white;
+
+}
+
+
+.error-icon {
+
+  background: #ef4444;
+
+  color: white;
+
+}
+
+
+.delete-icon {
+
+  background: #fee2e2;
+
+}
+
+
+.popup-button {
+
+  width: 100%;
+
+  margin-top: 20px;
+
+  padding: 13px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background: #2563eb;
+
+  color: white;
+
+  cursor: pointer;
+
+  font-size: 15px;
+
+}
+
+
+.error-button {
+
+  background: #dc2626;
+
+}
+
+
+/* =========================
+   DELETE
+========================= */
+
+.delete-buttons {
+
+  display: flex;
+
+  gap: 10px;
+
+  margin-top: 25px;
+
+}
+
+
+.btn-cancel,
+.btn-delete {
+
+  flex: 1;
+
+  border: none;
+
+  padding: 12px;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+
+}
+
+
+.btn-cancel {
+
+  background: #e5e7eb;
+
+}
+
+
+.btn-delete {
+
+  background: #dc2626;
+
+  color: white;
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+  .form-grid {
+
+    grid-template-columns:
+      1fr;
+
+  }
+
+
+  .riwayat-header {
+
+    flex-direction: column;
+
+  }
+
+
+  .riwayat-controls {
+
+    width: 100%;
+
+  }
+
+
+  .riwayat-controls select {
+
+    flex: 1;
+
+  }
+
+
+  .header h1 {
+
+    font-size: 20px;
+
+  }
+
+}

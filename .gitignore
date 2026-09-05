@@ -1,0 +1,23 @@
+# Editor dan sistem operasi
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Dependency dan hasil build jika proyek dikembangkan dengan tooling Node.js
+node_modules/
+dist/
+build/
+
+# File konfigurasi lokal dan rahasia
+.env
+.env.*
+!.env.example
+
+# Log dan file sementara
+*.log
+coverage/
+.tmp/
+tmp/
