@@ -11,6 +11,38 @@ if (!API_URL) {
 }
 
 
+async function bacaResponseJSON(response) {
+
+  const text =
+    await response.text();
+
+  let result;
+
+
+  try {
+    result = JSON.parse(text);
+  }
+
+  catch (error) {
+    throw new Error(
+      'Server mengembalikan halaman HTML, bukan JSON. Pastikan URL Google Apps Script dan deployment-nya benar.'
+    );
+  }
+
+
+  if (!response.ok) {
+    throw new Error(
+      result.message ||
+      'Server gagal memproses permintaan.'
+    );
+  }
+
+
+  return result;
+
+}
+
+
 /* =========================================
    ELEMENT
 ========================================= */
@@ -98,7 +130,7 @@ async function loadMonths() {
       );
 
     const result =
-      await response.json();
+      await bacaResponseJSON(response);
 
 
     if (!result.success) {
@@ -260,7 +292,7 @@ form.addEventListener(
 
 
       const result =
-        await response.json();
+        await bacaResponseJSON(response);
 
 
       if (!result.success) {
@@ -384,7 +416,7 @@ async function loadRiwayat() {
 
 
     const result =
-      await response.json();
+      await bacaResponseJSON(response);
 
 
     if (!result.success) {
@@ -816,7 +848,7 @@ document
 
 
         const result =
-          await response.json();
+          await bacaResponseJSON(response);
 
 
         if (!result.success) {
