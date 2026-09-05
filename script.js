@@ -833,13 +833,18 @@ document
 
               method: 'POST',
 
+              headers: {
+                'Content-Type':
+                  'text/plain;charset=utf-8'
+              },
+
               body:
                 JSON.stringify({
 
                   action: 'hapus',
 
                   row:
-                    rowYangAkanDihapus
+                    Number(rowYangAkanDihapus)
 
                 })
 
