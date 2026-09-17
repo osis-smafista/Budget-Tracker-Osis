@@ -2,47 +2,6 @@
   DESIGN TOKENS & RESET
 ========================= */
 
-:root {
-  --ink: #172033;
-  --muted: #667085;
-  --line: #e4e7ec;
-  --surface: #ffffff;
-  --canvas: #f6f8fb;
-  --navy: #102a43;
-  --blue: #1769aa;
-  --blue-dark: #0f4c81;
-  --green: #11845b;
-  --red: #c23b4a;
-  --shadow: 0 14px 35px rgba(16, 42, 67, 0.08);
-}
-
-* {
-  box-sizing: border-box;
-}
-
-
-body {
-
-  margin: 0;
-
-  min-width: 320px;
-
-  font-family:
-    "Trebuchet MS",
-    "Segoe UI",
-    sans-serif;
-
-  background:
-    radial-gradient(circle at top right, #e5f1fb 0, transparent 34%),
-    var(--canvas);
-
-  color: var(--ink);
-
-  line-height: 1.5;
-
-}
-
-
 /* =========================
    HEADER
 ========================= */
@@ -190,8 +149,7 @@ body {
   text-transform: uppercase;
 }
 
-.summary-status,
-.monthly-summary-header span {
+.summary-status {
   color: var(--muted);
   font-size: 13px;
 }
@@ -234,32 +192,6 @@ body {
   color: var(--muted);
   font-size: 12px;
 }
-
-.monthly-summary {
-  padding: 21px;
-  border: 1px solid rgba(228, 231, 236, 0.9);
-  border-radius: 14px;
-  background: var(--surface);
-  box-shadow: var(--shadow);
-}
-
-.monthly-summary-header {
-  align-items: baseline;
-  margin-bottom: 8px;
-}
-
-.monthly-summary .table-wrapper {
-  margin-top: 14px;
-}
-
-.amount-positive {
-  color: var(--green);
-}
-
-.amount-negative {
-  color: var(--red);
-}
-
 
 /* =========================
    CARD
@@ -490,12 +422,43 @@ textarea {
 }
 
 
-.riwayat-controls {
+.filter-menu {
+  position: relative;
+}
 
-  display: flex;
+.filter-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
 
-  gap: 10px;
+.filter-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 10;
+  width: 220px;
+  padding: 15px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: 0 12px 28px rgba(16, 42, 67, 0.16);
+}
 
+.filter-panel[hidden] {
+  display: none;
+}
+
+.filter-panel label {
+  display: block;
+  margin: 0 0 6px;
+  color: #344054;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.filter-panel select + label {
+  margin-top: 12px;
 }
 
 
@@ -859,15 +822,10 @@ tbody tr:hover {
     grid-template-columns: 1fr;
   }
 
-  .summary-heading,
-  .monthly-summary-header {
+  .summary-heading {
     align-items: flex-start;
     flex-direction: column;
     gap: 5px;
-  }
-
-  .monthly-summary {
-    padding: 18px;
   }
 
   .form-grid {
@@ -881,22 +839,6 @@ tbody tr:hover {
   .riwayat-header {
 
     flex-direction: column;
-
-  }
-
-
-  .riwayat-controls {
-
-    width: 100%;
-
-    align-items: stretch;
-
-  }
-
-
-  .riwayat-controls select {
-
-    flex: 1;
 
   }
 

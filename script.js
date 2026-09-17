@@ -53,11 +53,6 @@ const bulanSelect =
     'bulan'
   );
 
-const bulanRiwayat =
-  document.getElementById(
-    'bulanRiwayat'
-  );
-
 const riwayatBody =
   document.getElementById(
     'riwayatBody'
@@ -73,18 +68,29 @@ const btnSimpan =
     'btnSimpan'
   );
 
-const ringkasanBody =
+const filterBulan =
   document.getElementById(
-    'ringkasanBody'
+    'filterBulan'
   );
 
-const semuaTransaksiBody =
+const filterJenis =
   document.getElementById(
-    'semuaTransaksiBody'
+    'filterJenis'
+  );
+
+const filterPanel =
+  document.getElementById(
+    'filterPanel'
+  );
+
+const btnFilter =
+  document.getElementById(
+    'btnFilter'
   );
 
 
 let rowYangAkanDihapus = null;
+let transaksiRingkasan = [];
 
 
 /* =========================================
@@ -158,7 +164,7 @@ async function loadMonths() {
           )
         );
 
-        bulanRiwayat.add(
+        filterBulan.add(
           new Option(
             bulan,
             bulan
@@ -210,6 +216,7 @@ async function loadRingkasan() {
     }
 
     const summary = result.data;
+    transaksiRingkasan = summary.transaksi;
 
     document.getElementById('totalSaldo').textContent =
       formatRupiah(summary.totalSaldo);
@@ -220,46 +227,7 @@ async function loadRingkasan() {
     document.getElementById('totalPengeluaran').textContent =
       formatRupiah(summary.totalPengeluaran);
 
-    ringkasanBody.innerHTML = '';
-
-    summary.perBulan.forEach(function(item) {
-      const tr = document.createElement('tr');
-
-      tr.innerHTML = `
-        <td><strong>${escapeHTML(item.bulan)}</strong></td>
-        <td class="amount-positive">${formatRupiah(item.pemasukan)}</td>
-        <td class="amount-negative">${formatRupiah(item.pengeluaran)}</td>
-        <td><strong>${formatRupiah(item.saldo)}</strong></td>
-      `;
-
-      ringkasanBody.appendChild(tr);
-    });
-
-    semuaTransaksiBody.innerHTML = '';
-
-    summary.transaksi.forEach(function(item) {
-      const tr = document.createElement('tr');
-      const badgeClass =
-        item.jenis === 'Pemasukan'
-          ? 'badge-pemasukan'
-          : 'badge-pengeluaran';
-
-      tr.innerHTML = `
-        <td><strong>${escapeHTML(item.bulan)}</strong></td>
-        <td>${escapeHTML(item.namaBarang)}</td>
-        <td>${escapeHTML(item.tanggal)}</td>
-        <td>
-          <span class="badge ${badgeClass}">
-            ${escapeHTML(item.jenis)}
-          </span>
-        </td>
-        <td>${formatNominal(item.nominal)}</td>
-        <td>${escapeHTML(item.diinputOleh)}</td>
-        <td>${escapeHTML(item.keterangan)}</td>
-      `;
-
-      semuaTransaksiBody.appendChild(tr);
-    });
+    renderTransactions(summary.transaksi);
 
     summaryStatus.textContent =
       'Diperbarui ' +
@@ -275,6 +243,64 @@ async function loadRingkasan() {
       'Gagal memuat ringkasan';
 
   }
+
+}
+
+
+function renderTransactions(transaksi) {
+
+  const bulan = filterBulan.value;
+  const jenis = filterJenis.value;
+  const filteredTransactions = transaksi.filter(function(item) {
+    return (!bulan || item.bulan === bulan) &&
+      (!jenis || item.jenis === jenis);
+  });
+
+  riwayatBody.innerHTML = '';
+
+  if (filteredTransactions.length === 0) {
+    loadingRiwayat.style.display = 'block';
+    loadingRiwayat.textContent =
+      'Tidak ada transaksi yang sesuai filter.';
+    return;
+  }
+
+  loadingRiwayat.style.display = 'none';
+
+  filteredTransactions.forEach(function(item) {
+    const tr = document.createElement('tr');
+    const badgeClass =
+      item.jenis === 'Pemasukan'
+        ? 'badge-pemasukan'
+        : 'badge-pengeluaran';
+
+    tr.innerHTML = `
+      <td><strong>${escapeHTML(item.bulan)}</strong></td>
+      <td>${escapeHTML(item.namaBarang)}</td>
+      <td>${escapeHTML(item.tanggal)}</td>
+      <td>
+        <span class="badge ${badgeClass}">
+          ${escapeHTML(item.jenis)}
+        </span>
+      </td>
+      <td>${formatNominal(item.nominal)}</td>
+      <td>${escapeHTML(item.diinputOleh)}</td>
+      <td>${escapeHTML(item.keterangan)}</td>
+      <td>
+        <button
+          class="btn-hapus"
+          type="button"
+          title="Hapus transaksi"
+          aria-label="Hapus transaksi ${escapeHTML(item.namaBarang)}"
+          onclick="konfirmasiHapus(${item.row})"
+        >
+          🗑️
+        </button>
+      </td>
+    `;
+
+    riwayatBody.appendChild(tr);
+  });
 
 }
 
@@ -413,21 +439,11 @@ form.addEventListener(
       }
 
 
-      const bulanDipilih =
-        data.bulan;
-
-
       form.reset();
 
 
       setTanggalHariIni();
 
-
-      bulanRiwayat.value =
-        bulanDipilih;
-
-
-      await loadRiwayat();
 
       await loadRingkasan();
 
@@ -460,181 +476,28 @@ form.addEventListener(
 );
 
 
-/* =========================================
-   PILIH BULAN RIWAYAT
-========================================= */
-
-bulanRiwayat.addEventListener(
+filterBulan.addEventListener(
   'change',
-  loadRiwayat
+  function() {
+    renderTransactions(transaksiRingkasan);
+  }
 );
 
-
-document
-  .getElementById('btnRefresh')
-  .addEventListener(
-    'click',
-    loadRiwayat
-  );
-
-
-/* =========================================
-   LOAD RIWAYAT
-========================================= */
-
-async function loadRiwayat() {
-
-  const bulan =
-    bulanRiwayat.value;
-
-
-  if (!bulan) {
-
-    loadingRiwayat.style.display =
-      'block';
-
-    loadingRiwayat.textContent =
-      'Pilih bulan untuk melihat transaksi.';
-
-    riwayatBody.innerHTML = '';
-
-    return;
-
+filterJenis.addEventListener(
+  'change',
+  function() {
+    renderTransactions(transaksiRingkasan);
   }
+);
 
-
-  try {
-
-    loadingRiwayat.style.display =
-      'block';
-
-    loadingRiwayat.textContent =
-      'Memuat transaksi...';
-
-
-    riwayatBody.innerHTML = '';
-
-
-    const url =
-      API_URL +
-      '?action=riwayat&bulan=' +
-      encodeURIComponent(bulan);
-
-
-    const response =
-      await fetch(url);
-
-
-    const result =
-      await bacaResponseJSON(response);
-
-
-    if (!result.success) {
-
-      throw new Error(
-        result.message
-      );
-
-    }
-
-
-    const transaksi =
-      result.data;
-
-
-    if (
-      transaksi.length === 0
-    ) {
-
-      loadingRiwayat.style.display =
-        'block';
-
-      loadingRiwayat.textContent =
-        'Belum ada transaksi pada bulan ini.';
-
-      return;
-
-    }
-
-
-    loadingRiwayat.style.display =
-      'none';
-
-
-    transaksi.forEach(
-      function(item) {
-
-        const tr =
-          document.createElement('tr');
-
-
-        const badgeClass =
-          item.jenis === 'Pemasukan'
-            ? 'badge-pemasukan'
-            : 'badge-pengeluaran';
-
-
-        tr.innerHTML = `
-
-          <td>${escapeHTML(item.namaBarang)}</td>
-
-          <td>${escapeHTML(item.tanggal)}</td>
-
-          <td>
-            <span class="badge ${badgeClass}">
-              ${escapeHTML(item.jenis)}
-            </span>
-          </td>
-
-          <td>
-            ${formatNominal(item.nominal)}
-          </td>
-
-          <td>
-            ${escapeHTML(item.diinputOleh)}
-          </td>
-
-          <td>
-            ${escapeHTML(item.keterangan)}
-          </td>
-
-          <td>
-
-            <button
-              class="btn-hapus"
-              onclick="konfirmasiHapus(${item.row})"
-            >
-              🗑️
-            </button>
-
-          </td>
-
-        `;
-
-
-        riwayatBody.appendChild(tr);
-
-      }
-    );
-
+btnFilter.addEventListener(
+  'click',
+  function() {
+    const isOpen = !filterPanel.hidden;
+    filterPanel.hidden = isOpen;
+    btnFilter.setAttribute('aria-expanded', String(!isOpen));
   }
-
-  catch (error) {
-
-    console.error(error);
-
-
-    loadingRiwayat.style.display =
-      'block';
-
-
-    loadingRiwayat.textContent =
-      'Gagal memuat transaksi: ' +
-      error.message;
-
-  }
-
-}
+);
 
 
 /* =========================================
@@ -1010,8 +873,6 @@ document
 
         }
 
-
-        await loadRiwayat();
 
         await loadRingkasan();
 

@@ -85,49 +85,6 @@
         </article>
       </div>
 
-      <div class="monthly-summary">
-        <div class="monthly-summary-header">
-          <h3>Rekap per bulan</h3>
-          <span>Semua transaksi dalam satu tampilan</span>
-        </div>
-        <div class="table-wrapper">
-          <table>
-            <thead>
-              <tr>
-                <th>Bulan</th>
-                <th>Pemasukan</th>
-                <th>Pengeluaran</th>
-                <th>Sisa kas berjalan</th>
-              </tr>
-            </thead>
-            <tbody id="ringkasanBody"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="monthly-summary all-transactions-summary">
-        <div class="monthly-summary-header">
-          <h3>Semua transaksi</h3>
-          <span>Detail pemasukan dan pengeluaran seluruh bulan</span>
-        </div>
-        <div class="table-wrapper">
-          <table>
-            <thead>
-              <tr>
-                <th>Bulan</th>
-                <th>Nama</th>
-                <th>Tanggal</th>
-                <th>Jenis</th>
-                <th>Nominal</th>
-                <th>Diinput Oleh</th>
-                <th>Keterangan</th>
-              </tr>
-            </thead>
-            <tbody id="semuaTransaksiBody"></tbody>
-          </table>
-        </div>
-      </div>
-
     </section>
 
 
@@ -318,106 +275,65 @@
 
 
 
-    <!-- =========================
-         RIWAYAT
-    ========================== -->
-
-    <section class="card">
+    <section class="card transaction-history">
 
       <div class="riwayat-header">
-
         <div>
-
-          <h2>
-            Riwayat Catatan Transaksi
-          </h2>
-
-          <p>
-            Lihat dan kelola transaksi yang sudah tercatat.
-          </p>
-
+          <h2>Riwayat Catatan Transaksi</h2>
+          <p>Lihat dan kelola seluruh transaksi yang sudah tercatat.</p>
         </div>
 
-
-        <div class="riwayat-controls">
-
-          <select id="bulanRiwayat">
-
-            <option value="">
-              Pilih Bulan
-            </option>
-
-          </select>
-
-
+        <div class="filter-menu">
           <button
             type="button"
-            class="btn-secondary"
-            id="btnRefresh"
+            class="btn-secondary filter-toggle"
+            id="btnFilter"
+            aria-expanded="false"
+            aria-controls="filterPanel"
           >
-            🔄 Refresh
+            <span aria-hidden="true">⚙</span>
+            Filter
           </button>
 
+          <div class="filter-panel" id="filterPanel" hidden>
+            <label for="filterBulan">Bulan</label>
+            <select id="filterBulan">
+              <option value="">Semua bulan</option>
+            </select>
+
+            <label for="filterJenis">Jenis transaksi</label>
+            <select id="filterJenis">
+              <option value="">Semua jenis</option>
+              <option value="Pemasukan">Pemasukan</option>
+              <option value="Pengeluaran">Pengeluaran</option>
+            </select>
+          </div>
         </div>
-
       </div>
 
-
-      <!-- LOADING RIWAYAT -->
-
-      <div
-        id="loadingRiwayat"
-        class="empty-state"
-      >
-
-        Pilih bulan untuk melihat transaksi.
-
+      <div id="loadingRiwayat" class="empty-state">
+        Memuat transaksi...
       </div>
 
-
-      <!-- TABLE -->
-
-      <div
-        class="table-wrapper"
-        id="tableWrapper"
-      >
-
+      <div class="table-wrapper">
         <table>
-
           <thead>
-
             <tr>
-
+              <th>Bulan</th>
               <th>Nama</th>
-
               <th>Tanggal</th>
-
               <th>Jenis</th>
-
               <th>Nominal</th>
-
               <th>Diinput Oleh</th>
-
               <th>Keterangan</th>
-
               <th>Aksi</th>
-
             </tr>
-
           </thead>
-
-
-          <tbody id="riwayatBody">
-
-          </tbody>
-
+          <tbody id="riwayatBody"></tbody>
         </table>
-
       </div>
-
 
     </section>
-
 
   </main>
 
