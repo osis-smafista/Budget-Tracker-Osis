@@ -68,19 +68,19 @@
       <div class="summary-cards">
         <article class="summary-card summary-card-balance">
           <span class="summary-label">Sisa uang kas</span>
-          <strong id="totalSaldo">Rp 0</strong>
+          <strong id="totalSaldo" class="summary-value-loading" aria-label="Memuat sisa uang kas"></strong>
           <small>Akumulasi pemasukan dikurangi pengeluaran</small>
         </article>
 
         <article class="summary-card">
           <span class="summary-label">Total pemasukan</span>
-          <strong id="totalPemasukan">Rp 0</strong>
+          <strong id="totalPemasukan" class="summary-value-loading" aria-label="Memuat total pemasukan"></strong>
           <small>Seluruh periode yang tercatat</small>
         </article>
 
         <article class="summary-card">
           <span class="summary-label">Total pengeluaran</span>
-          <strong id="totalPengeluaran">Rp 0</strong>
+          <strong id="totalPengeluaran" class="summary-value-loading" aria-label="Memuat total pengeluaran"></strong>
           <small>Seluruh periode yang tercatat</small>
         </article>
       </div>
@@ -329,7 +329,38 @@
               <th>Aksi</th>
             </tr>
           </thead>
-          <tbody id="riwayatBody"></tbody>
+          <tbody id="riwayatBody" class="transaction-body-loading">
+            <tr class="skeleton-row" aria-hidden="true">
+              <td><span></span></td>
+              <td><span></span></td>
+              <td><span></span></td>
+              <td><span class="skeleton-badge"></span></td>
+              <td><span></span></td>
+              <td><span></span></td>
+              <td><span></span></td>
+              <td><span class="skeleton-action"></span></td>
+            </tr>
+            <tr class="skeleton-row" aria-hidden="true">
+              <td><span></span></td>
+              <td><span></span></td>
+              <td><span></span></td>
+              <td><span class="skeleton-badge"></span></td>
+              <td><span></span></td>
+              <td><span></span></td>
+              <td><span></span></td>
+              <td><span class="skeleton-action"></span></td>
+            </tr>
+            <tr class="skeleton-row" aria-hidden="true">
+              <td><span></span></td>
+              <td><span></span></td>
+              <td><span></span></td>
+              <td><span class="skeleton-badge"></span></td>
+              <td><span></span></td>
+              <td><span></span></td>
+              <td><span></span></td>
+              <td><span class="skeleton-action"></span></td>
+            </tr>
+          </tbody>
         </table>
       </div>
 

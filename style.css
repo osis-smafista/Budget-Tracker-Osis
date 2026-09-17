@@ -230,6 +230,44 @@ body {
   font-size: clamp(21px, 3vw, 29px);
 }
 
+
+.summary-value-loading {
+  position: relative;
+  width: 82%;
+  min-height: 34px;
+  overflow: hidden;
+  border-radius: 7px;
+  background: #e8eef3;
+  color: transparent;
+}
+
+.summary-value-loading::after,
+.skeleton-row span {
+  background: linear-gradient(
+    100deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.9) 48%,
+    transparent 76%
+  );
+  background-size: 220% 100%;
+  animation: skeleton-shimmer 1.35s ease-in-out infinite;
+}
+
+.summary-value-loading::after {
+  position: absolute;
+  inset: 0;
+  content: '';
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 120% 0;
+  }
+
+  100% {
+    background-position: -120% 0;
+  }
+}
 .summary-card small {
   color: var(--muted);
   font-size: 12px;
@@ -1008,4 +1046,40 @@ tbody tr:hover {
 
   text-decoration: underline;
   
+}
+
+.transaction-body-loading .skeleton-row:hover {
+  background: transparent;
+}
+
+.skeleton-row td {
+  height: 57px;
+}
+
+.skeleton-row span {
+  display: block;
+  width: 88%;
+  height: 13px;
+  border-radius: 5px;
+  background-color: #e8eef3;
+}
+
+.skeleton-row td:nth-child(2) span {
+  width: 72%;
+}
+
+.skeleton-row td:nth-child(3) span {
+  width: 62%;
+}
+
+.skeleton-row .skeleton-badge {
+  width: 76px;
+  height: 25px;
+  border-radius: 999px;
+}
+
+.skeleton-row .skeleton-action {
+  width: 34px;
+  height: 32px;
+  border-radius: 8px;
 }

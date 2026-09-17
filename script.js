@@ -199,6 +199,9 @@ async function loadRingkasan() {
   const summaryStatus =
     document.getElementById('summaryStatus');
 
+  setSummaryLoading(true);
+  setTransactionsLoading(true);
+
   try {
 
     summaryStatus.textContent = 'Memuat...';
@@ -227,6 +230,8 @@ async function loadRingkasan() {
     document.getElementById('totalPengeluaran').textContent =
       formatRupiah(summary.totalPengeluaran);
 
+    setSummaryLoading(false);
+
     renderTransactions(summary.transaksi);
 
     summaryStatus.textContent =
@@ -239,10 +244,64 @@ async function loadRingkasan() {
   } catch (error) {
 
     console.error(error);
+    setSummaryLoading(false);
+    setTransactionsLoading(false);
     summaryStatus.textContent =
       'Gagal memuat ringkasan';
 
   }
+
+}
+
+
+function setSummaryLoading(isLoading) {
+
+  [
+    'totalSaldo',
+    'totalPemasukan',
+    'totalPengeluaran'
+  ].forEach(function(id) {
+    document
+      .getElementById(id)
+      .classList.toggle(
+        'summary-value-loading',
+        isLoading
+      );
+  });
+
+}
+
+
+function setTransactionsLoading(isLoading) {
+
+  if (!isLoading) {
+    riwayatBody.classList.remove(
+      'transaction-body-loading'
+    );
+    return;
+  }
+
+  riwayatBody.classList.add(
+    'transaction-body-loading'
+  );
+  riwayatBody.innerHTML = Array.from(
+    { length: 3 },
+    function() {
+      return `
+        <tr class="skeleton-row" aria-hidden="true">
+          <td><span></span></td>
+          <td><span></span></td>
+          <td><span></span></td>
+          <td><span class="skeleton-badge"></span></td>
+          <td><span></span></td>
+          <td><span></span></td>
+          <td><span></span></td>
+          <td><span class="skeleton-action"></span></td>
+        </tr>
+      `;
+    }
+  ).join('');
+  loadingRiwayat.style.display = 'none';
 
 }
 
@@ -257,6 +316,7 @@ function renderTransactions(transaksi) {
   });
 
   riwayatBody.innerHTML = '';
+  setTransactionsLoading(false);
 
   if (filteredTransactions.length === 0) {
     loadingRiwayat.style.display = 'block';
