@@ -152,6 +152,116 @@ body {
 
 
 /* =========================
+   RINGKASAN KEUANGAN
+========================= */
+
+.summary-section {
+  margin-bottom: 20px;
+}
+
+.summary-heading,
+.monthly-summary-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.summary-heading {
+  margin-bottom: 14px;
+}
+
+.summary-heading h2,
+.monthly-summary-header h3 {
+  margin: 0;
+  color: var(--navy);
+}
+
+.summary-heading h2 {
+  font-size: 24px;
+}
+
+.eyebrow {
+  margin: 0 0 3px;
+  color: var(--blue);
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.summary-status,
+.monthly-summary-header span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.summary-cards {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.summary-card {
+  padding: 21px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.summary-card-balance {
+  border-color: #a9d8c5;
+  background: linear-gradient(135deg, #effaf5, #ffffff);
+}
+
+.summary-label {
+  display: block;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.summary-card strong {
+  display: block;
+  margin: 8px 0 3px;
+  color: var(--navy);
+  font-size: clamp(21px, 3vw, 29px);
+}
+
+.summary-card small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.monthly-summary {
+  padding: 21px;
+  border: 1px solid rgba(228, 231, 236, 0.9);
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.monthly-summary-header {
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+
+.monthly-summary .table-wrapper {
+  margin-top: 14px;
+}
+
+.amount-positive {
+  color: var(--green);
+}
+
+.amount-negative {
+  color: var(--red);
+}
+
+
+/* =========================
    CARD
 ========================= */
 
@@ -744,6 +854,21 @@ tbody tr:hover {
 ========================= */
 
 @media (max-width: 700px) {
+
+  .summary-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-heading,
+  .monthly-summary-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .monthly-summary {
+    padding: 18px;
+  }
 
   .form-grid {
 

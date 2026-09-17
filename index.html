@@ -55,6 +55,81 @@
 
   <main class="container">
 
+    <section class="summary-section" aria-label="Ringkasan keuangan">
+
+      <div class="summary-heading">
+        <div>
+          <p class="eyebrow">Ringkasan seluruh periode</p>
+          <h2>Posisi Kas</h2>
+        </div>
+        <span id="summaryStatus" class="summary-status">Memuat...</span>
+      </div>
+
+      <div class="summary-cards">
+        <article class="summary-card summary-card-balance">
+          <span class="summary-label">Sisa uang kas</span>
+          <strong id="totalSaldo">Rp 0</strong>
+          <small>Akumulasi pemasukan dikurangi pengeluaran</small>
+        </article>
+
+        <article class="summary-card">
+          <span class="summary-label">Total pemasukan</span>
+          <strong id="totalPemasukan">Rp 0</strong>
+          <small>Seluruh periode yang tercatat</small>
+        </article>
+
+        <article class="summary-card">
+          <span class="summary-label">Total pengeluaran</span>
+          <strong id="totalPengeluaran">Rp 0</strong>
+          <small>Seluruh periode yang tercatat</small>
+        </article>
+      </div>
+
+      <div class="monthly-summary">
+        <div class="monthly-summary-header">
+          <h3>Rekap per bulan</h3>
+          <span>Semua transaksi dalam satu tampilan</span>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Bulan</th>
+                <th>Pemasukan</th>
+                <th>Pengeluaran</th>
+                <th>Sisa kas berjalan</th>
+              </tr>
+            </thead>
+            <tbody id="ringkasanBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="monthly-summary all-transactions-summary">
+        <div class="monthly-summary-header">
+          <h3>Semua transaksi</h3>
+          <span>Detail pemasukan dan pengeluaran seluruh bulan</span>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Bulan</th>
+                <th>Nama</th>
+                <th>Tanggal</th>
+                <th>Jenis</th>
+                <th>Nominal</th>
+                <th>Diinput Oleh</th>
+                <th>Keterangan</th>
+              </tr>
+            </thead>
+            <tbody id="semuaTransaksiBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
 
     <!-- =========================
          FORM TRANSAKSI

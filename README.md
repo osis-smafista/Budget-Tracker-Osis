@@ -33,11 +33,11 @@
 
 ## 🌐 Live Demo
 
-> 🚀 **Website:** `MASUKKAN_URL_GITHUB_PAGES_DI_SINI`
+> 🚀 **Website:** `https://budget-tracker-osisputrasmafista.pages.dev`
 
 <div align="center">
 
-[![Open Website](https://img.shields.io/badge/🌐%20Open%20Website-Live%20Demo-success?style=for-the-badge)](MASUKKAN_URL_GITHUB_PAGES)
+[![Open Website](https://img.shields.io/badge/🌐%20Open%20Website-Live%20Demo-success?style=for-the-badge)](https://budget-tracker-osisputrasmafista.pages.dev)
 
 </div>
 
@@ -662,9 +662,3 @@ All Rights Reserved.
 <div align="center">
 
 ⭐ Jika project ini bermanfaat sebagai referensi, jangan lupa untuk memberikan **Star** pada repository!
-
-<br>
-
-**Made with ❤️ for OSIS SMAFISTA**
-
-</div>

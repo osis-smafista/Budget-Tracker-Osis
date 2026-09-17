@@ -73,6 +73,16 @@ const btnSimpan =
     'btnSimpan'
   );
 
+const ringkasanBody =
+  document.getElementById(
+    'ringkasanBody'
+  );
+
+const semuaTransaksiBody =
+  document.getElementById(
+    'semuaTransaksiBody'
+  );
+
 
 let rowYangAkanDihapus = null;
 
@@ -86,6 +96,8 @@ document.addEventListener(
   function() {
 
     loadMonths();
+
+    loadRingkasan();
 
     setTanggalHariIni();
 
@@ -166,6 +178,101 @@ async function loadMonths() {
       'Gagal mengambil daftar bulan: ' +
       error.message
     );
+
+  }
+
+}
+
+
+/* =========================================
+   LOAD RINGKASAN SELURUH PERIODE
+========================================= */
+
+async function loadRingkasan() {
+
+  const summaryStatus =
+    document.getElementById('summaryStatus');
+
+  try {
+
+    summaryStatus.textContent = 'Memuat...';
+
+    const response =
+      await fetch(
+        API_URL + '?action=ringkasan'
+      );
+
+    const result =
+      await bacaResponseJSON(response);
+
+    if (!result.success) {
+      throw new Error(result.message);
+    }
+
+    const summary = result.data;
+
+    document.getElementById('totalSaldo').textContent =
+      formatRupiah(summary.totalSaldo);
+
+    document.getElementById('totalPemasukan').textContent =
+      formatRupiah(summary.totalPemasukan);
+
+    document.getElementById('totalPengeluaran').textContent =
+      formatRupiah(summary.totalPengeluaran);
+
+    ringkasanBody.innerHTML = '';
+
+    summary.perBulan.forEach(function(item) {
+      const tr = document.createElement('tr');
+
+      tr.innerHTML = `
+        <td><strong>${escapeHTML(item.bulan)}</strong></td>
+        <td class="amount-positive">${formatRupiah(item.pemasukan)}</td>
+        <td class="amount-negative">${formatRupiah(item.pengeluaran)}</td>
+        <td><strong>${formatRupiah(item.saldo)}</strong></td>
+      `;
+
+      ringkasanBody.appendChild(tr);
+    });
+
+    semuaTransaksiBody.innerHTML = '';
+
+    summary.transaksi.forEach(function(item) {
+      const tr = document.createElement('tr');
+      const badgeClass =
+        item.jenis === 'Pemasukan'
+          ? 'badge-pemasukan'
+          : 'badge-pengeluaran';
+
+      tr.innerHTML = `
+        <td><strong>${escapeHTML(item.bulan)}</strong></td>
+        <td>${escapeHTML(item.namaBarang)}</td>
+        <td>${escapeHTML(item.tanggal)}</td>
+        <td>
+          <span class="badge ${badgeClass}">
+            ${escapeHTML(item.jenis)}
+          </span>
+        </td>
+        <td>${formatNominal(item.nominal)}</td>
+        <td>${escapeHTML(item.diinputOleh)}</td>
+        <td>${escapeHTML(item.keterangan)}</td>
+      `;
+
+      semuaTransaksiBody.appendChild(tr);
+    });
+
+    summaryStatus.textContent =
+      'Diperbarui ' +
+      new Date().toLocaleTimeString('id-ID', {
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+
+  } catch (error) {
+
+    console.error(error);
+    summaryStatus.textContent =
+      'Gagal memuat ringkasan';
 
   }
 
@@ -321,6 +428,8 @@ form.addEventListener(
 
 
       await loadRiwayat();
+
+      await loadRingkasan();
 
 
       tampilkanSuccessPopup(
@@ -903,6 +1012,8 @@ document
 
 
         await loadRiwayat();
+
+        await loadRingkasan();
 
 
         tampilkanSuccessPopup(
