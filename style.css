@@ -682,6 +682,24 @@ textarea {
 
 }
 
+.report-filters {
+  display: grid;
+  grid-template-columns: auto minmax(130px, 1fr) auto minmax(130px, 1fr);
+  align-items: center;
+  gap: 8px;
+}
+
+.report-filters label {
+  color: #475467;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.report-filters select {
+  padding: 9px 10px;
+  font-size: 14px;
+}
+
 
 .table-wrapper {
 
@@ -1090,6 +1108,11 @@ tbody tr:hover {
 
     flex-direction: column;
 
+  }
+
+  .report-filters {
+    width: 100%;
+    grid-template-columns: auto minmax(0, 1fr);
   }
 
 

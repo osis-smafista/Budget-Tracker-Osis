@@ -148,6 +148,48 @@
           </table>
         </div>
       </section>
+
+      <section class="card transaction-history" aria-labelledby="reportHistoryTitle">
+        <div class="riwayat-header">
+          <div>
+            <h2 id="reportHistoryTitle">Riwayat Catatan Transaksi</h2>
+            <p>Daftar transaksi untuk melihat detail pemasukan dan pengeluaran.</p>
+          </div>
+          <div class="report-filters">
+            <label for="reportFilterBulan">Bulan</label>
+            <select id="reportFilterBulan">
+              <option value="">Semua bulan</option>
+            </select>
+            <label for="reportFilterJenis">Jenis</label>
+            <select id="reportFilterJenis">
+              <option value="">Semua jenis</option>
+              <option value="Pemasukan">Pemasukan</option>
+              <option value="Pengeluaran">Pengeluaran</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="reportLoadingRiwayat" class="empty-state">
+          Memuat transaksi...
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Bulan</th>
+                <th>Nama</th>
+                <th>Tanggal</th>
+                <th>Jenis</th>
+                <th>Nominal</th>
+                <th>Diinput Oleh</th>
+                <th>Keterangan</th>
+              </tr>
+            </thead>
+            <tbody id="reportRiwayatBody"></tbody>
+          </table>
+        </div>
+      </section>
     </div>
 
     <!-- =========================

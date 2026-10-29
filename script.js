@@ -94,6 +94,18 @@ const sectionLaporan =
 const sectionKelolaData =
   document.getElementById('managementSection');
 
+const reportFilterBulan =
+  document.getElementById('reportFilterBulan');
+
+const reportFilterJenis =
+  document.getElementById('reportFilterJenis');
+
+const reportRiwayatBody =
+  document.getElementById('reportRiwayatBody');
+
+const reportLoadingRiwayat =
+  document.getElementById('reportLoadingRiwayat');
+
 
 let rowYangAkanDihapus = null;
 let transaksiRingkasan = [];
@@ -180,6 +192,13 @@ async function loadMonths() {
           )
         );
 
+        reportFilterBulan.add(
+          new Option(
+            bulan,
+            bulan
+          )
+        );
+
       }
     );
 
@@ -248,6 +267,7 @@ async function loadRingkasan() {
     setSummaryLoading(false);
 
     renderTransactions(summary.transaksi);
+    renderReportTransactions(summary.transaksi);
     renderFinancialReport();
 
     summaryStatus.textContent =
@@ -270,6 +290,55 @@ async function loadRingkasan() {
   }
 
 }
+
+function renderReportTransactions(transaksi) {
+
+  const bulan = reportFilterBulan.value;
+  const jenis = reportFilterJenis.value;
+  const filteredTransactions = transaksi.filter(function(item) {
+    return (!bulan || item.bulan === bulan) &&
+      (!jenis || item.jenis === jenis);
+  });
+
+  reportRiwayatBody.innerHTML = '';
+
+  if (filteredTransactions.length === 0) {
+    reportLoadingRiwayat.style.display = 'block';
+    reportLoadingRiwayat.textContent =
+      transaksi.length === 0
+        ? 'Belum ada transaksi yang tercatat.'
+        : 'Tidak ada transaksi yang sesuai filter.';
+    return;
+  }
+
+  reportLoadingRiwayat.style.display = 'none';
+
+  filteredTransactions.forEach(function(item) {
+    const tr = document.createElement('tr');
+    const badgeClass =
+      item.jenis === 'Pemasukan'
+        ? 'badge-pemasukan'
+        : 'badge-pengeluaran';
+
+    tr.innerHTML = `
+      <td><strong>${escapeHTML(item.bulan)}</strong></td>
+      <td>${escapeHTML(item.namaBarang)}</td>
+      <td>${escapeHTML(item.tanggal)}</td>
+      <td>
+        <span class="badge ${badgeClass}">
+          ${escapeHTML(item.jenis)}
+        </span>
+      </td>
+      <td>${formatNominal(item.nominal)}</td>
+      <td>${escapeHTML(item.diinputOleh)}</td>
+      <td>${escapeHTML(item.keterangan)}</td>
+    `;
+
+    reportRiwayatBody.appendChild(tr);
+  });
+
+}
+
 
 function renderFinancialReport() {
 
@@ -788,6 +857,14 @@ document
     document.getElementById('editGate').hidden = false;
     showSection(sectionLaporan);
   });
+
+reportFilterBulan.addEventListener('change', function() {
+  renderReportTransactions(transaksiRingkasan);
+});
+
+reportFilterJenis.addEventListener('change', function() {
+  renderReportTransactions(transaksiRingkasan);
+});
 
 window.addEventListener('resize', function() {
   if (ringkasanDimuat) {
