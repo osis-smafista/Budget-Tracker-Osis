@@ -12,6 +12,12 @@
   <title>Budget Tracker OSIS 2026/2027</title>
 
   <link
+    rel="icon"
+    type="image/png"
+    href="assets/logo_OSIS_SMAFISTA.png"
+  >
+
+  <link
     rel="stylesheet"
     href="style.css"
   >
@@ -55,227 +61,195 @@
 
   <main class="container">
 
-    <section class="summary-section" aria-label="Ringkasan keuangan">
+    <nav class="section-tabs" aria-label="Navigasi aplikasi">
+      <button
+        type="button"
+        class="section-tab is-active"
+        id="btnLaporan"
+        aria-controls="reportSection"
+        aria-pressed="true"
+      >
+        Laporan Keuangan
+      </button>
+      <button
+        type="button"
+        class="section-tab"
+        id="btnKelolaData"
+        aria-controls="managementSection"
+        aria-pressed="false"
+      >
+        Kelola Data
+      </button>
+    </nav>
 
-      <div class="summary-heading">
-        <div>
-          <p class="eyebrow">Ringkasan seluruh periode</p>
-          <h2>Laporan Keuangan</h2>
+    <div id="reportSection" class="app-section">
+      <section class="summary-section" aria-label="Ringkasan keuangan">
+
+        <div class="summary-heading">
+          <div>
+            <p class="eyebrow">Ringkasan seluruh periode</p>
+            <h2>Laporan Keuangan</h2>
+          </div>
+          <span id="summaryStatus" class="summary-status">Memuat...</span>
         </div>
-        <span id="summaryStatus" class="summary-status">Memuat...</span>
-      </div>
 
-      <div class="summary-cards">
-        <article class="summary-card summary-card-balance">
-          <span class="summary-label">Sisa uang kas</span>
-          <strong id="totalSaldo" class="summary-value-loading" aria-label="Memuat sisa uang kas"></strong>
-          <small>Akumulasi pemasukan dikurangi pengeluaran</small>
-        </article>
+        <div class="summary-cards">
+          <article class="summary-card summary-card-balance">
+            <span class="summary-label">Sisa uang kas</span>
+            <strong id="totalSaldo" class="summary-value-loading" aria-label="Memuat sisa uang kas"></strong>
+            <small>Akumulasi pemasukan dikurangi pengeluaran</small>
+          </article>
 
-        <article class="summary-card">
-          <span class="summary-label">Total pemasukan</span>
-          <strong id="totalPemasukan" class="summary-value-loading" aria-label="Memuat total pemasukan"></strong>
-          <small>Seluruh periode yang tercatat</small>
-        </article>
+          <article class="summary-card">
+            <span class="summary-label">Total pemasukan</span>
+            <strong id="totalPemasukan" class="summary-value-loading" aria-label="Memuat total pemasukan"></strong>
+            <small>Seluruh periode yang tercatat</small>
+          </article>
 
-        <article class="summary-card">
-          <span class="summary-label">Total pengeluaran</span>
-          <strong id="totalPengeluaran" class="summary-value-loading" aria-label="Memuat total pengeluaran"></strong>
-          <small>Seluruh periode yang tercatat</small>
-        </article>
-      </div>
+          <article class="summary-card">
+            <span class="summary-label">Total pengeluaran</span>
+            <strong id="totalPengeluaran" class="summary-value-loading" aria-label="Memuat total pengeluaran"></strong>
+            <small>Seluruh periode yang tercatat</small>
+          </article>
+        </div>
 
-    </section>
+      </section>
 
+      <section class="monthly-summary" aria-labelledby="reportTitle">
+        <div class="monthly-summary-header">
+          <div>
+            <p class="eyebrow">Tren keuangan</p>
+            <h3 id="reportTitle">Grafik Pemasukan &amp; Pengeluaran</h3>
+          </div>
+          <span>Perbandingan setiap bulan</span>
+        </div>
+        <div class="chart-legend" aria-hidden="true">
+          <span><i class="legend-income"></i>Pemasukan</span>
+          <span><i class="legend-expense"></i>Pengeluaran</span>
+        </div>
+        <div class="chart-container">
+          <canvas id="monthlyChart" role="img" aria-label="Grafik pemasukan dan pengeluaran per bulan">
+            Grafik tidak didukung oleh browser ini. Gunakan tabel rekap bulanan di bawah.
+          </canvas>
+        </div>
+        <div class="table-wrapper report-table-wrapper">
+          <table class="monthly-report-table">
+            <thead>
+              <tr>
+                <th>Bulan</th>
+                <th>Pemasukan</th>
+                <th>Pengeluaran</th>
+                <th>Saldo Bulanan</th>
+              </tr>
+            </thead>
+            <tbody id="monthlyReportBody">
+              <tr><td colspan="4" class="report-empty">Memuat laporan bulanan...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
 
     <!-- =========================
-         FORM TRANSAKSI
+         KELOLA DATA
     ========================== -->
 
-    <section class="card">
-
-      <div class="card-title">
-
-        <div>
-          <h2>Tambah Catatan Transaksi</h2>
-
-          <p>
-            Masukkan data pemasukan atau pengeluaran.
-          </p>
-        </div>
-
+    <section id="managementSection" class="app-section" aria-label="Kelola transaksi" hidden>
+      <div id="editGate" class="card access-card">
+        <div class="access-icon" aria-hidden="true">🔒</div>
+        <h2>Area Pengelolaan Data</h2>
+        <p>Masukkan password untuk menambah atau menghapus transaksi.</p>
+        <form id="formUnlock">
+          <div class="form-group">
+            <label for="editPassword">Password</label>
+            <input
+              type="password"
+              id="editPassword"
+              autocomplete="current-password"
+              required
+            >
+          </div>
+          <p id="accessError" class="access-error" role="alert" hidden></p>
+          <button type="submit" class="btn-primary" id="btnUnlock">Masuk ke Kelola Data</button>
+        </form>
       </div>
 
-
-      <form id="formTransaksi">
-
-
-        <div class="form-grid">
-
-
-          <!-- BULAN -->
-
-          <div class="form-group">
-
-            <label for="bulan">
-              Bulan
-            </label>
-
-            <select
-              id="bulan"
-              required
-            >
-              <option value="">
-                Pilih Bulan
-              </option>
-            </select>
-
+      <div id="managementContent" hidden>
+        <div class="management-heading">
+          <div>
+            <p class="eyebrow">Akses terbatas</p>
+            <h2>Kelola Transaksi</h2>
+            <p>Tambah atau hapus catatan transaksi.</p>
           </div>
-
-
-          <!-- NAMA BARANG -->
-
-          <div class="form-group">
-
-            <label for="namaBarang">
-              Nama Barang/Transaksi
-            </label>
-
-            <input
-              type="text"
-              id="namaBarang"
-              placeholder="Contoh: Pembelian ATK"
-              required
-            >
-
-          </div>
-
-
-          <!-- TANGGAL -->
-
-          <div class="form-group">
-
-            <label for="tanggal">
-              Tanggal
-            </label>
-
-            <input
-              type="date"
-              id="tanggal"
-              required
-            >
-
-          </div>
-
-
-          <!-- JENIS -->
-
-          <div class="form-group">
-
-            <label for="jenis">
-              Jenis Transaksi
-            </label>
-
-            <select
-              id="jenis"
-              required
-            >
-
-              <option value="">
-                Pilih Jenis
-              </option>
-
-              <option value="Pemasukan">
-                Pemasukan
-              </option>
-
-              <option value="Pengeluaran">
-                Pengeluaran
-              </option>
-
-            </select>
-
-          </div>
-
-
-          <!-- NOMINAL -->
-
-          <div class="form-group">
-
-            <label for="nominal">
-              Nominal
-            </label>
-
-            <input
-              type="text"
-              id="nominal"
-              placeholder="Rp 0"
-              inputmode="numeric"
-              required
-            >
-
-          </div>
-
-
-          <!-- DIINPUT OLEH -->
-
-          <div class="form-group">
-
-            <label for="diinputOleh">
-              Diinput Oleh
-            </label>
-
-            <input
-              type="text"
-              id="diinputOleh"
-              placeholder="Nama penginput"
-              required
-            >
-
-          </div>
-
+          <button type="button" class="btn-secondary" id="btnKunci">Kunci Kembali</button>
         </div>
 
+        <section class="card">
 
-        <!-- KETERANGAN -->
-
-        <div class="form-group full-width">
-
-          <label for="keterangan">
-            Keterangan
-          </label>
-
-          <textarea
-            id="keterangan"
-            placeholder="Tambahkan keterangan jika diperlukan..."
-            rows="4"
-          ></textarea>
-
-        </div>
+          <div class="card-title">
+            <div>
+              <h2>Tambah Catatan Transaksi</h2>
+              <p>Masukkan data pemasukan atau pengeluaran.</p>
+            </div>
+          </div>
 
 
-        <button
-          type="submit"
-          class="btn-primary"
-          id="btnSimpan"
-        >
+          <form id="formTransaksi">
 
-          <span>
-            💾
-          </span>
+            <div class="form-grid">
 
-          Simpan Transaksi
+              <div class="form-group">
+                <label for="bulan">Bulan</label>
+                <select id="bulan" required>
+                  <option value="">Pilih Bulan</option>
+                </select>
+              </div>
 
-        </button>
+              <div class="form-group">
+                <label for="namaBarang">Nama Barang/Transaksi</label>
+                <input type="text" id="namaBarang" placeholder="Contoh: Pembelian ATK" required>
+              </div>
+
+              <div class="form-group">
+                <label for="tanggal">Tanggal</label>
+                <input type="date" id="tanggal" required>
+              </div>
+
+              <div class="form-group">
+                <label for="jenis">Jenis Transaksi</label>
+                <select id="jenis" required>
+                  <option value="">Pilih Jenis</option>
+                  <option value="Pemasukan">Pemasukan</option>
+                  <option value="Pengeluaran">Pengeluaran</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="nominal">Nominal</label>
+                <input type="text" id="nominal" placeholder="Rp 0" inputmode="numeric" required>
+              </div>
+
+              <div class="form-group">
+                <label for="diinputOleh">Diinput Oleh</label>
+                <input type="text" id="diinputOleh" placeholder="Nama penginput" required>
+              </div>
+
+            </div>
+
+            <div class="form-group full-width">
+              <label for="keterangan">Keterangan</label>
+              <textarea id="keterangan" placeholder="Tambahkan keterangan jika diperlukan..." rows="4"></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary" id="btnSimpan">
+              <span>💾</span>
+              Simpan Transaksi
+            </button>
+          </form>
+        </section>
 
 
-      </form>
-
-    </section>
-
-
-
-    <section class="card transaction-history">
+        <section class="card transaction-history">
 
       <div class="riwayat-header">
         <div>
@@ -364,6 +338,8 @@
         </table>
       </div>
 
+        </section>
+      </div>
     </section>
 
   </main>

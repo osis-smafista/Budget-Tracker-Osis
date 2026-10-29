@@ -84,15 +84,18 @@ Project ini dibuat untuk:
 
 | Fitur                 | Deskripsi                                   |
 | --------------------- | ------------------------------------------- |
-| ➕ Tambah Transaksi    | Menambahkan pemasukan atau pengeluaran      |
+| 📊 Laporan Keuangan   | Ringkasan saldo, grafik, dan rekap per bulan |
+| 🔐 Kelola Data        | Akses tambah/hapus transaksi dengan password |
 | 📅 Filter Bulan       | Menampilkan transaksi berdasarkan bulan     |
 | 💰 Format Rupiah      | Nominal diformat secara otomatis            |
-| 📊 Statistik Keuangan | Total pemasukan, pengeluaran, dan saldo     |
-| 📋 Riwayat Transaksi  | Menampilkan seluruh transaksi yang tercatat |
-| 🗑️ Hapus Transaksi   | Menghapus transaksi yang tidak diperlukan   |
+| 📋 Riwayat Transaksi  | Menampilkan transaksi pada area pengelolaan |
 | ☁️ Cloud Database     | Data disimpan di Google Sheets              |
 | 📱 Responsive Design  | Mendukung desktop dan mobile                |
 | ⚡ Real-Time Update    | Riwayat diperbarui setelah transaksi        |
+
+Area **Kelola Data** meminta password sebelum dapat dibuka. Proxy API juga
+memverifikasi password untuk setiap permintaan perubahan, sehingga kontrolnya
+tidak hanya bergantung pada tampilan browser.
 
 ---
 

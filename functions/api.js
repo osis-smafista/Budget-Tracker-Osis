@@ -1,5 +1,6 @@
 const TIMEOUT_MS = 30000;
 const MAX_GET_RETRIES = 2;
+const EDIT_PASSWORD = 'osisjaya';
 
 
 /* =========================================
@@ -140,21 +141,6 @@ export async function onRequest(context) {
   const APPS_SCRIPT_URL =
     context.env.APPS_SCRIPT_URL;
 
-
-  if (!APPS_SCRIPT_URL) {
-    return Response.json(
-      {
-        success: false,
-        message:
-          'APPS_SCRIPT_URL belum dikonfigurasi di Cloudflare.'
-      },
-      {
-        status: 500
-      }
-    );
-  }
-
-
   const request =
     context.request;
 
@@ -170,6 +156,19 @@ export async function onRequest(context) {
     ===================================== */
 
     if (request.method === 'GET') {
+      if (!APPS_SCRIPT_URL) {
+        return Response.json(
+          {
+            success: false,
+            message:
+              'APPS_SCRIPT_URL belum dikonfigurasi di Cloudflare.'
+          },
+          {
+            status: 500
+          }
+        );
+      }
+
       const targetUrl =
         new URL(APPS_SCRIPT_URL);
 
@@ -214,6 +213,78 @@ export async function onRequest(context) {
       const body =
         await request.text();
 
+      let payload;
+
+      try {
+        payload = JSON.parse(body);
+      } catch {
+        return Response.json(
+          {
+            success: false,
+            message: 'Format data tidak valid.'
+          },
+          {
+            status: 400
+          }
+        );
+      }
+
+      if (!payload || typeof payload !== 'object' || Array.isArray(payload)) {
+        return Response.json(
+          {
+            success: false,
+            message: 'Format data tidak valid.'
+          },
+          {
+            status: 400
+          }
+        );
+      }
+
+      if (payload.action === 'verifikasiPassword') {
+        if (payload.password !== EDIT_PASSWORD) {
+          return Response.json(
+            {
+              success: false,
+              message: 'Password tidak benar.'
+            },
+            {
+              status: 401
+            }
+          );
+        }
+
+        return Response.json({
+          success: true
+        });
+      }
+
+      if (payload.password !== EDIT_PASSWORD) {
+        return Response.json(
+          {
+            success: false,
+            message: 'Akses ditolak. Masukkan password Kelola Data.'
+          },
+          {
+            status: 401
+          }
+        );
+      }
+
+      if (!APPS_SCRIPT_URL) {
+        return Response.json(
+          {
+            success: false,
+            message:
+              'APPS_SCRIPT_URL belum dikonfigurasi di Cloudflare.'
+          },
+          {
+            status: 500
+          }
+        );
+      }
+
+      delete payload.password;
 
       /*
         POST TIDAK DI-RETRY.
@@ -236,7 +307,7 @@ export async function onRequest(context) {
                 'text/plain;charset=utf-8'
             },
 
-            body,
+            body: JSON.stringify(payload),
 
             redirect: 'follow'
           }

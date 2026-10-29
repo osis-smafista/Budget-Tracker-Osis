@@ -88,9 +88,18 @@ const btnFilter =
     'btnFilter'
   );
 
+const sectionLaporan =
+  document.getElementById('reportSection');
+
+const sectionKelolaData =
+  document.getElementById('managementSection');
+
 
 let rowYangAkanDihapus = null;
 let transaksiRingkasan = [];
+let daftarBulan = [];
+let passwordKelola = '';
+let ringkasanDimuat = false;
 
 
 /* =========================================
@@ -174,6 +183,11 @@ async function loadMonths() {
       }
     );
 
+    daftarBulan = result.data;
+    if (ringkasanDimuat) {
+      renderFinancialReport();
+    }
+
   }
 
   catch (error) {
@@ -220,6 +234,7 @@ async function loadRingkasan() {
 
     const summary = result.data;
     transaksiRingkasan = summary.transaksi;
+    ringkasanDimuat = true;
 
     document.getElementById('totalSaldo').textContent =
       formatRupiah(summary.totalSaldo);
@@ -233,6 +248,7 @@ async function loadRingkasan() {
     setSummaryLoading(false);
 
     renderTransactions(summary.transaksi);
+    renderFinancialReport();
 
     summaryStatus.textContent =
       'Diperbarui ' +
@@ -248,8 +264,153 @@ async function loadRingkasan() {
     setTransactionsLoading(false);
     summaryStatus.textContent =
       'Gagal memuat ringkasan';
+    document.getElementById('monthlyReportBody').innerHTML =
+      '<tr><td colspan="4" class="report-empty">Gagal memuat laporan bulanan.</td></tr>';
 
   }
+
+}
+
+function renderFinancialReport() {
+
+  const laporan = getMonthlyReportData();
+
+  document.getElementById('monthlyReportBody').innerHTML =
+    laporan.length
+      ? laporan.map(function(item) {
+        return `
+          <tr>
+            <td><strong>${escapeHTML(item.bulan)}</strong></td>
+            <td class="amount-positive">${formatRupiah(item.pemasukan)}</td>
+            <td class="amount-negative">${formatRupiah(item.pengeluaran)}</td>
+            <td class="${item.saldo < 0 ? 'amount-negative' : 'amount-positive'}">${formatRupiah(item.saldo)}</td>
+          </tr>
+        `;
+      }).join('')
+      : '<tr><td colspan="4" class="report-empty">Belum ada data laporan.</td></tr>';
+
+  drawMonthlyChart(laporan);
+
+}
+
+
+function drawMonthlyChart(laporan) {
+
+  const canvas = document.getElementById('monthlyChart');
+  const width = canvas.clientWidth;
+
+  if (!width) {
+    return;
+  }
+
+  const height = canvas.clientHeight;
+  const pixelRatio = window.devicePixelRatio || 1;
+  canvas.width = width * pixelRatio;
+  canvas.height = height * pixelRatio;
+
+  const context = canvas.getContext('2d');
+
+  if (!context) {
+    throw new Error('Browser tidak mendukung grafik laporan.');
+  }
+
+  context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+  context.clearRect(0, 0, width, height);
+
+  if (!laporan.length) {
+    context.fillStyle = '#667085';
+    context.font = '14px "Trebuchet MS", sans-serif';
+    context.textAlign = 'center';
+    context.fillText('Belum ada data transaksi.', width / 2, height / 2);
+    return;
+  }
+
+  const padding = { top: 14, right: 12, bottom: 36, left: 72 };
+  const chartWidth = width - padding.left - padding.right;
+  const chartHeight = height - padding.top - padding.bottom;
+  const maxValue = Math.max(
+    1,
+    ...laporan.map(function(item) {
+      return Math.max(item.pemasukan, item.pengeluaran);
+    })
+  );
+  const barWidth = Math.min(18, chartWidth / laporan.length * 0.28);
+  const gridLines = 4;
+
+  context.font = '11px "Trebuchet MS", sans-serif';
+  context.textAlign = 'right';
+  context.textBaseline = 'middle';
+
+  for (let index = 0; index <= gridLines; index += 1) {
+    const y = padding.top + chartHeight * index / gridLines;
+    const value = maxValue * (gridLines - index) / gridLines;
+
+    context.strokeStyle = '#e9eef3';
+    context.beginPath();
+    context.moveTo(padding.left, y);
+    context.lineTo(width - padding.right, y);
+    context.stroke();
+
+    context.fillStyle = '#667085';
+    context.fillText(
+      formatCompactRupiah(value),
+      padding.left - 8,
+      y
+    );
+  }
+
+  laporan.forEach(function(item, index) {
+    const groupWidth = chartWidth / laporan.length;
+    const center = padding.left + groupWidth * (index + 0.5);
+    const incomeHeight = item.pemasukan / maxValue * chartHeight;
+    const expenseHeight = item.pengeluaran / maxValue * chartHeight;
+    const baseline = padding.top + chartHeight;
+
+    context.fillStyle = '#1769aa';
+    context.fillRect(
+      center - barWidth - 2,
+      baseline - incomeHeight,
+      barWidth,
+      incomeHeight
+    );
+
+    context.fillStyle = '#e16a73';
+    context.fillRect(
+      center + 2,
+      baseline - expenseHeight,
+      barWidth,
+      expenseHeight
+    );
+
+    context.fillStyle = '#667085';
+    context.font = '11px "Trebuchet MS", sans-serif';
+    context.textAlign = 'center';
+    context.textBaseline = 'alphabetic';
+    context.fillText(
+      String(item.bulan).slice(0, 3),
+      center,
+      height - 11
+    );
+  });
+
+}
+
+
+function formatCompactRupiah(value) {
+
+  if (value >= 1000000000) {
+    return 'Rp ' + (value / 1000000000).toFixed(1) + ' M';
+  }
+
+  if (value >= 1000000) {
+    return 'Rp ' + (value / 1000000).toFixed(1) + ' jt';
+  }
+
+  if (value >= 1000) {
+    return 'Rp ' + (value / 1000).toFixed(0) + ' rb';
+  }
+
+  return 'Rp ' + Math.round(value);
 
 }
 
@@ -412,10 +573,15 @@ form.addEventListener(
 
     event.preventDefault();
 
+    if (!passwordKelola) {
+      tampilkanErrorPopup('Silakan masuk ke area Kelola Data terlebih dahulu.');
+      return;
+    }
 
     const data = {
 
       action: 'tambah',
+      password: passwordKelola,
 
       bulan:
         document
@@ -559,6 +725,139 @@ btnFilter.addEventListener(
   }
 );
 
+document
+  .getElementById('btnLaporan')
+  .addEventListener('click', function() {
+    showSection(sectionLaporan);
+  renderFinancialReport();
+  });
+
+document
+  .getElementById('btnKelolaData')
+  .addEventListener('click', function() {
+    showSection(sectionKelolaData);
+    if (passwordKelola) {
+      showManagementContent();
+    }
+  });
+
+document
+  .getElementById('formUnlock')
+  .addEventListener('submit', async function(event) {
+    event.preventDefault();
+
+    const passwordInput = document.getElementById('editPassword');
+    const accessError = document.getElementById('accessError');
+    const btnUnlock = document.getElementById('btnUnlock');
+    btnUnlock.disabled = true;
+    accessError.hidden = true;
+
+    try {
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/plain;charset=utf-8'
+        },
+        body: JSON.stringify({
+          action: 'verifikasiPassword',
+          password: passwordInput.value
+        })
+      });
+      const result = await bacaResponseJSON(response);
+
+      if (!result.success) {
+        throw new Error(result.message || 'Password tidak benar.');
+      }
+
+      passwordKelola = passwordInput.value;
+      passwordInput.value = '';
+      showManagementContent();
+    } catch (error) {
+      accessError.textContent = error.message || 'Gagal memverifikasi password.';
+      accessError.hidden = false;
+    } finally {
+      btnUnlock.disabled = false;
+    }
+  });
+
+document
+  .getElementById('btnKunci')
+  .addEventListener('click', function() {
+    passwordKelola = '';
+    document.getElementById('managementContent').hidden = true;
+    document.getElementById('editGate').hidden = false;
+    showSection(sectionLaporan);
+  });
+
+window.addEventListener('resize', function() {
+  if (ringkasanDimuat) {
+    drawMonthlyChart(getMonthlyReportData());
+  }
+});
+
+function showSection(section) {
+  sectionLaporan.hidden = section !== sectionLaporan;
+  sectionKelolaData.hidden = section !== sectionKelolaData;
+
+  document.getElementById('btnLaporan').classList.toggle(
+    'is-active',
+    section === sectionLaporan
+  );
+  document.getElementById('btnKelolaData').classList.toggle(
+    'is-active',
+    section === sectionKelolaData
+  );
+  document.getElementById('btnLaporan').setAttribute(
+    'aria-pressed',
+    String(section === sectionLaporan)
+  );
+  document.getElementById('btnKelolaData').setAttribute(
+    'aria-pressed',
+    String(section === sectionKelolaData)
+  );
+}
+
+function showManagementContent() {
+  document.getElementById('editGate').hidden = true;
+  document.getElementById('managementContent').hidden = false;
+}
+
+function getMonthlyReportData() {
+  const rekap = new Map();
+
+  transaksiRingkasan.forEach(function(item) {
+    if (!rekap.has(item.bulan)) {
+      rekap.set(item.bulan, {
+        pemasukan: 0,
+        pengeluaran: 0
+      });
+    }
+    const nominal = Number(
+      String(item.nominal ?? '').replace(/[^\d]/g, '')
+    ) || 0;
+    const total = rekap.get(item.bulan);
+    if (item.jenis === 'Pemasukan') {
+      total.pemasukan += nominal;
+    } else if (item.jenis === 'Pengeluaran') {
+      total.pengeluaran += nominal;
+    }
+  });
+
+  return (daftarBulan.length ? daftarBulan : Array.from(rekap.keys()))
+    .map(function(bulan) {
+      const total = rekap.get(bulan) || {
+        pemasukan: 0,
+        pengeluaran: 0
+      };
+      return {
+        bulan: bulan,
+        pemasukan: total.pemasukan,
+        pengeluaran: total.pengeluaran,
+        saldo: total.pemasukan - total.pengeluaran
+      };
+    });
+}
+
 
 /* =========================================
    FORMAT RUPIAH
@@ -566,14 +865,22 @@ btnFilter.addEventListener(
 
 function formatRupiah(value) {
 
+  const text =
+    String(value ?? '')
+      .trim();
+
   const angka =
     Number(
-      String(value)
+      text
         .replace(/[^\d]/g, '')
     );
+  const nominal =
+    text.startsWith('-')
+      ? -angka
+      : angka;
 
 
-  return angka.toLocaleString(
+  return nominal.toLocaleString(
     'id-ID',
     {
       style: 'currency',
@@ -874,9 +1181,14 @@ document
     'click',
     async function() {
 
-      if (!rowYangAkanDihapus) {
-        return;
-      }
+    if (!passwordKelola) {
+      tampilkanErrorPopup('Silakan masuk ke area Kelola Data terlebih dahulu.');
+      return;
+    }
+
+    if (!rowYangAkanDihapus) {
+      return;
+    }
 
 
       document
@@ -911,6 +1223,7 @@ document
                 JSON.stringify({
 
                   action: 'hapus',
+                  password: passwordKelola,
 
                   row:
                     Number(rowYangAkanDihapus)
